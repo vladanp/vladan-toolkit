@@ -63,6 +63,7 @@ public/icon/        # extension icons
 ## Releasing
 - Every push to `main` updates a **Release PR** (release-please). Merge it to release:
   it tags `vX.Y.Z`, writes `CHANGELOG.md`, re-runs full CI, then attaches the tested zip to the
-  GitHub Release and, if the `CHROME_*` secrets are set, publishes it to the Chrome Web Store.
+  GitHub Release and, if the `CHROME_SUBMIT_ENV` secret is set (contents of `.env.submit`, CWS API v2
+  service account), publishes it to the Chrome Web Store.
 - Version comes from `package.json` (WXT copies it into the manifest). Don't bump it by hand.
   The Chrome Web Store rejects all-zero versions, so the project starts at `0.1.0`.

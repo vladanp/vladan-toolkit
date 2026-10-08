@@ -20,12 +20,15 @@ Download the zip from a GitHub Release (or a CI run's artifacts) and unzip it.
 Then open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, and select the folder.
 
 ## Chrome Web Store (one-time setup)
-Publishing is automatic once these are set up. Until then the publish step is skipped.
+Publishing is automatic once this is set up. Until then the publish step is skipped.
 1. Register as a [Chrome Web Store developer](https://chrome.google.com/webstore/devconsole) (one-time $5 fee).
-2. Upload the first zip manually to create the item, and note the **extension ID**.
-3. Follow [WXT's publishing guide](https://wxt.dev/guide/essentials/publishing.html) to create OAuth credentials:
-   run `pnpm wxt submit init` to obtain the client ID, client secret and refresh token (saved to the
-   git-ignored `.env.submit`). Set the OAuth consent screen to **In production**, or Google expires
-   the refresh token after 7 days.
-4. Add the repo secrets: `gh secret set -f .env.submit`, then delete `.env.submit`.
-   They are `CHROME_EXTENSION_ID`, `CHROME_CLIENT_ID`, `CHROME_CLIENT_SECRET`, `CHROME_REFRESH_TOKEN`.
+2. Upload the first zip manually as a draft. The dashboard URL then shows both IDs you need:
+   `devconsole/<publisher-id>/<extension-id>/...`.
+3. Create a service account for the Chrome Web Store API (v2) following
+   [Google's guide](https://developer.chrome.com/docs/webstore/service-accounts); under
+   "Obtain access tokens" use "Use a JSON Web Token" and stop after downloading the JSON key.
+4. Run `pnpm wxt submit init`, choose **v2**, and enter the IDs plus `client_email` and `private_key`
+   from the JSON key. It writes the git-ignored `.env.submit`.
+5. Store it as one repo secret, then delete the local file and the JSON key:
+   `gh secret set CHROME_SUBMIT_ENV < .env.submit` (bash/cmd).
+   The old client-ID/refresh-token API (v1.1) stops working on October 15th, 2026, so don't use it.

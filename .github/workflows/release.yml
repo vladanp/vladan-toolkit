@@ -38,10 +38,8 @@ jobs:
     needs: [release-please, verify]
     runs-on: ubuntu-latest
     env:
-      CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
-      CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
-      CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
-      CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+      # The whole `.env.submit` written by `pnpm wxt submit init` (Chrome Web Store API v2, service account).
+      CHROME_SUBMIT_ENV: ${{ secrets.CHROME_SUBMIT_ENV }}
     steps:
       - uses: actions/checkout@v5
 
@@ -66,9 +64,11 @@ jobs:
         run: gh release upload "${{ needs.release-please.outputs.tag_name }}" .output/*-chrome.zip --clobber
 
       - name: Publish to Chrome Web Store
-        if: env.CHROME_EXTENSION_ID != ''
-        run: pnpm wxt submit --chrome-zip .output/*-chrome.zip
+        if: env.CHROME_SUBMIT_ENV != ''
+        run: |
+          printf '%s\n' "$CHROME_SUBMIT_ENV" > .env.submit
+          pnpm wxt submit --chrome-zip .output/*-chrome.zip
 
-      - name: Skip Chrome Web Store (secrets not configured)
-        if: env.CHROME_EXTENSION_ID == ''
-        run: echo "::notice::CHROME_* secrets not set - skipped Web Store publish. See README > Chrome Web Store."
+      - name: Skip Chrome Web Store (secret not configured)
+        if: env.CHROME_SUBMIT_ENV == ''
+        run: echo "::notice::CHROME_SUBMIT_ENV secret not set - skipped Web Store publish. See README > Chrome Web Store."
