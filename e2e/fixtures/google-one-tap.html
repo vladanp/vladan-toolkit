@@ -1,0 +1,26 @@
+<!doctype html>
+<!--
+  Offline model of a site using Google Identity Services: one-tap through the browser (FedCM) on load,
+  the older iframe one-tap prompt, and a "Sign in with Google" button iframe that must stay.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example blog</title>
+  </head>
+  <body>
+    <h1>Example blog</h1>
+    <iframe id="signin-button" src="https://accounts.google.com/gsi/button?client_id=x" width="200" height="40"></iframe>
+    <div id="credential_picker_container" style="position: fixed; top: 10px; right: 10px">
+      <iframe src="https://accounts.google.com/gsi/iframe/select?client_id=x" width="390" height="200"></iframe>
+    </div>
+    <script>
+      navigator.credentials
+        .get({ identity: { providers: [{ configURL: 'https://accounts.google.com/gsi/fedcm.json', clientId: 'x' }] } })
+        .then(
+          () => { document.body.dataset.oneTap = 'shown'; },
+          (error) => { document.body.dataset.oneTap = `${error.name}: ${error.message}`; },
+        );
+    </script>
+  </body>
+</html>

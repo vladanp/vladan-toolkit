@@ -5,6 +5,6 @@ export const rejectCookieBanners = {
   name: 'Reject cookie banners',
   description:
     'Automatically rejects cookie consent pop-ups, or hides them when there is no way to reject.',
-  group: 'All websites',
+  group: 'Pop-ups',
   enabledByDefault: true,
 } satisfies Feature;

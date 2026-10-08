@@ -19,9 +19,17 @@ Reddit
 • Reddit cleaner: hides promoted posts and other ads, awards, and "Trending today" in search, on new and old Reddit.
 • Always use old Reddit (off by default): opens Reddit pages on old.reddit.com.
 
-All websites
+Pop-ups
 • Reject cookie banners: rejects cookie consent pop-ups, or hides them when there is no way to reject. Uses DuckDuckGo's open-source autoconsent rules, bundled in the extension.
+• Hide newsletter and sign-up pop-ups: hides "Join our newsletter" and "Get 10% off your first order" overlays with their dimmed backdrop, and lets you scroll again. Forms you open yourself stay.
+• Hide chat widgets: hides "Chat with us" bubbles and support chats (Intercom, Drift, Zendesk, HubSpot, Crisp, Tawk.to, LiveChat, Tidio and more).
+• Decline "Allow notifications?" prompts: notification requests a site makes on its own are answered "no" before Chrome asks you; sites' own notification pop-ups are hidden. Sites you already allowed, and buttons you click, still work.
+• Hide "Sign in with Google" pop-ups: stops Google's one-tap sign-in prompt. "Sign in with Google" buttons still work.
+• Hide sticky headers and footers (off by default): bars stuck to the top or bottom of the screen disappear while you scroll down and come back at the top.
+
+All websites
 • Remove tracking from links: strips utm_source, fbclid, gclid and other tracking parameters from web addresses before pages load.
+• Dark pattern detector: outlines and fades countdown timers and "only 2 left!" or "12 people are viewing" messages on shopping sites, so they don't rush you.
 
 Privacy: the extension collects no data. It stores only your on/off choices, synced with your Chrome profile. No analytics, no tracking, no remote code.
 
@@ -43,7 +51,7 @@ Open source: https://github.com/vladanp/vladan-toolkit
 **Single purpose description:**
 
 ```
-Cleans up the websites the user visits: removes distractions (YouTube Shorts, watched videos, sponsor segments, Reddit ads and awards), cookie consent pop-ups and link tracking parameters. Each customization can be switched on or off in the extension's settings.
+Cleans up the websites the user visits: removes distractions (YouTube Shorts, watched videos, sponsor segments, Reddit ads and awards), pop-ups (cookie consent, newsletter, chat, notification and sign-in prompts), link tracking parameters, and flags fake-urgency messages. Each customization can be switched on or off in the extension's settings.
 ```
 
 **Permission justifications:**
@@ -53,7 +61,7 @@ Cleans up the websites the user visits: removes distractions (YouTube Shorts, wa
 | `storage` | `Saves the user's on/off choice for each feature in chrome.storage.sync. Nothing else is stored.` |
 | `scripting` | `The cookie banner feature runs a few small functions bundled with the extension (from DuckDuckGo's open-source autoconsent library) in the page, to reject a consent pop-up through the consent manager's own API when it can't be done by clicking. No remote or user-provided code is run.` |
 | `declarativeNetRequestWithHostAccess` | `Removes tracking parameters (utm_source, fbclid, ...) from web addresses before pages load, and, only if the user turns it on, opens Reddit pages on old.reddit.com. Both use static rules bundled with the extension.` |
-| Host permission (all websites) | `Cookie consent pop-ups and link tracking parameters appear on any website, so the cookie banner script and the tracking parameter rules need to run on all sites. The extension does not read, collect or transmit page content. YouTube and Reddit features run only on youtube.com and reddit.com.` |
+| Host permission (all websites) | `Cookie banners, newsletter and chat pop-ups, notification and sign-in prompts, fake-urgency messages and link tracking parameters appear on any website, so those features need to run on all sites. Their scripts only hide or mark elements in the page and answer prompts; the extension does not collect or transmit page content. YouTube and Reddit features run only on youtube.com and reddit.com.` |
 
 **Remote code:** `No, I am not using remote code.`
 

@@ -1,0 +1,10 @@
+/*
+ * Google Identity Services one-tap prompt, iframe version (the FedCM version is browser UI, blocked in
+ * page.ts). Never the "Sign in with Google" button, which is an iframe from .../gsi/button.
+ */
+#credential_picker_container,
+#credential_picker_iframe,
+iframe[src^="https://accounts.google.com/gsi/iframe/select"] {
+  /* biome-ignore lint/complexity/noImportantStyles: the prompt sets its own inline styles */
+  display: none !important;
+}

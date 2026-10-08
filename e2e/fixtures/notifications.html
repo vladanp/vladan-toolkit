@@ -1,0 +1,30 @@
+<!doctype html>
+<!--
+  Offline model of a site asking for notification permission on load (no click), with a OneSignal-style
+  slide-down prompt, and a button that asks when clicked.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example news</title>
+  </head>
+  <body>
+    <h1>Example news</h1>
+    <button type="button" id="ask">Turn on notifications</button>
+    <div id="onesignal-slidedown-container">
+      <div id="onesignal-slidedown-dialog">We'd like to show you notifications. <button>Allow</button></div>
+    </div>
+    <div id="article">Today's top story.</div>
+    <script>
+      window.ask = () => Notification.requestPermission();
+      document.getElementById('ask').addEventListener('click', () => {
+        Notification.requestPermission().then((answer) => {
+          document.body.dataset.onClick = answer;
+        });
+      });
+      Notification.requestPermission().then((answer) => {
+        document.body.dataset.onLoad = answer;
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+/*
+ * Live chat / support widgets: the launcher bubble, its proactive "Hi! Need help?" messages and the
+ * chat window. Vendor-specific ids, classes and iframe titles only, so site content is never matched.
+ */
+
+/* Intercom */
+#intercom-container,
+.intercom-lightweight-app,
+.intercom-namespace,
+/* Drift / Salesloft */
+#drift-widget,
+#drift-frame-controller,
+#drift-frame-chat,
+/* Zendesk (Web Widget and Messaging) */
+#webWidget,
+iframe[title="Button to launch messaging window"],
+iframe[title="Messaging window"],
+iframe[title="Number of unread messages"],
+iframe[data-product="web_widget"],
+/* HubSpot */
+#hubspot-messages-iframe-container,
+/* Crisp */
+.crisp-client,
+#crisp-chatbox,
+/* Tawk.to */
+iframe[title="chat widget"],
+/* LiveChat */
+#chat-widget-container,
+#livechat-compact-container,
+#livechat-full,
+/* Tidio */
+#tidio-chat,
+#tidio-chat-iframe,
+/* Freshchat / Freshdesk */
+#fc_frame,
+#freshworks-container,
+#freshworks-frame,
+/* Olark */
+#olark-wrapper,
+#olark,
+/* Facebook / Messenger customer chat */
+.fb_dialog,
+.fb-customerchat,
+.fb_customer_chat_bubble_animated_no_badge,
+/* Gorgias */
+#gorgias-chat-container,
+/* Help Scout Beacon */
+#beacon-container,
+/* Chatwoot */
+.woot-widget-holder,
+.woot--bubble-holder,
+/* Smartsupp */
+#smartsupp-widget-container,
+/* JivoChat (also its own <jdiv> element, below) */
+#jivo-iframe-container,
+/* Zoho SalesIQ */
+#zsiq_float,
+.zsiq_floatmain,
+/* Others */
+#front-chat-container,
+#trengo-web-widget,
+#LeadboosterContainer,
+#podium-website-widget,
+#kommunicate-widget-iframe,
+.chaport-container,
+#PureChatWidget,
+#gist-app,
+#customerly-container,
+#brevo-conversations,
+#sib-conversations,
+.embeddedServiceHelpButton,
+#ada-button-frame,
+#bp-web-widget,
+#reamaze-widget,
+#userlike,
+#q-messenger-frame,
+.LPMcontainer,
+#Microsoft_Omnichannel_LCWidget_Chat_Iframe_Window {
+  /* biome-ignore lint/complexity/noImportantStyles: widgets set their own inline display styles */
+  display: none !important;
+}
+
+/* biome-ignore lint/correctness/noUnknownTypeSelector: JivoChat renders its widget as <jdiv> */
+jdiv {
+  /* biome-ignore lint/complexity/noImportantStyles: widgets set their own inline display styles */
+  display: none !important;
+}

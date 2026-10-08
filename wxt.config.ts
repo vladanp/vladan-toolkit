@@ -21,13 +21,13 @@ export default defineConfig({
     name: 'Vladan Toolkit',
     // Shown as the Web Store summary (max 132 chars).
     description:
-      'Skip YouTube sponsors, hide Shorts, reject cookie banners, strip link tracking, clean up Reddit. Each tweak can be switched off.',
+      'Blocks pop-ups, cookie banners and link tracking; skips YouTube sponsors; hides Shorts; flags fake urgency. Switch each tweak off.',
     // Only what features need (see CLAUDE.md):
     // - storage: per-feature on/off settings
     // - scripting: cookie banners (autoconsent's built-in snippets for some consent pop-ups)
     // - declarativeNetRequestWithHostAccess: tracking parameters, old Reddit (network rules)
     permissions: ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'],
-    // Cookie banners and tracking parameters work on every website.
+    // Cookie banners, pop-ups, tracking parameters and dark patterns are on every website.
     host_permissions: ['*://*/*'],
     // Disabled here; the background enables each ruleset while its feature's switch is on.
     declarative_net_request: {

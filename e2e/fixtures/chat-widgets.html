@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- Offline model of a site with several vendors' chat widgets, and page content that mentions chat. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example support</title>
+    <style>
+      .bubble { position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #2563eb; }
+      /* Like HubSpot's own stylesheet: more specific than the extension's rule, and !important. */
+      #hubspot-messages-iframe-container.widget-align-right { display: block !important; }
+    </style>
+  </head>
+  <body>
+    <h1>Support</h1>
+    <section id="contact-section">Chat with us: open the help center, or email support@example.com.</section>
+    <div id="chat-history" class="chat-widget-preview">Our blog post about chat widgets.</div>
+
+    <div class="intercom-lightweight-app bubble" id="intercom">Intercom</div>
+    <iframe id="drift-widget" title="Drift" srcdoc="Drift" class="bubble"></iframe>
+    <div id="hubspot-messages-iframe-container" class="bubble widget-align-right">HubSpot</div>
+    <iframe title="chat widget" id="tawk" srcdoc="Tawk" class="bubble"></iframe>
+    <iframe title="Button to launch messaging window" id="zendesk" srcdoc="Zendesk" class="bubble"></iframe>
+    <jdiv id="jivo" class="bubble">Jivo</jdiv>
+  </body>
+</html>

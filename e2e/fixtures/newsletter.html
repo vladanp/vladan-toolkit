@@ -1,0 +1,74 @@
+<!doctype html>
+<!--
+  Offline model of a shop that opens a newsletter pop-up on a timer (with a separate dimmed backdrop
+  and scroll lock), plus email fields that must stay: an inline footer form, a sign-in dialog shown on
+  load, and a contact form the user opens with a click.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example shop</title>
+    <style>
+      body { margin: 0; font-family: sans-serif; }
+      main { height: 3000px; padding: 20px; }
+      .backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 10; }
+      .modal { position: fixed; top: 20%; left: 30%; width: 40%; padding: 20px; background: #fff; z-index: 11; }
+      .hidden { display: none; }
+      .locked { overflow: hidden; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Example shop</h1>
+      <button type="button" id="open-contact">Contact us</button>
+    </main>
+
+    <footer id="footer-newsletter">
+      <label>Newsletter <input type="email" name="email" placeholder="Your email" /></label>
+    </footer>
+
+    <div class="modal" id="signin" role="dialog" style="top: 70%">
+      Sign in <input type="email" autocomplete="email" /> <input type="password" />
+    </div>
+
+    <div class="backdrop hidden" id="nl-backdrop"></div>
+    <div class="modal hidden" id="nl-popup" role="dialog">
+      <h2>Get 10% off your first order</h2>
+      <p>Join our newsletter for exclusive offers.</p>
+      <input type="email" placeholder="Enter your email" /> <button type="button">Subscribe</button>
+    </div>
+
+    <div class="modal hidden" id="contact" role="dialog" style="top: 5%">
+      Contact form <input type="email" placeholder="Email" /> <textarea></textarea>
+    </div>
+
+    <!-- A discount teaser without an email field (the email step comes after "Yes, please"). -->
+    <div class="hidden" id="offer" role="dialog" style="position: fixed; inset: 0; z-index: 12; background: rgba(0, 0, 0, 0.4)">
+      <div style="margin: 15% auto; width: 400px; height: 200px; background: #fff">
+        Want 20% off your first order? <button type="button">Yes, please</button>
+        <button type="button">No, I'll continue shopping</button>
+      </div>
+    </div>
+
+    <!-- Must stay: a location chooser, and an off-canvas cart drawer mentioning sign-up. -->
+    <div class="modal" id="location" role="dialog" style="top: 45%; height: 120px">
+      You seem to be in Serbia. Change your location? <button type="button">Change</button>
+    </div>
+    <div id="cart-drawer" style="position: fixed; top: 0; right: -500px; width: 450px; height: 100%; background: #eee">
+      My cart. Sign up for free shipping.
+    </div>
+
+    <script>
+      setTimeout(() => {
+        document.getElementById('nl-backdrop').classList.remove('hidden');
+        document.getElementById('nl-popup').classList.remove('hidden');
+        document.getElementById('offer').classList.remove('hidden');
+        document.body.classList.add('locked');
+        document.body.dataset.popupShown = 'yes';
+      }, 400);
+      document.getElementById('open-contact').addEventListener('click', () => {
+        document.getElementById('contact').classList.remove('hidden');
+      });
+    </script>
+  </body>
+</html>

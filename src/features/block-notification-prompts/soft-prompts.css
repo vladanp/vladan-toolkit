@@ -1,0 +1,10 @@
+/*
+ * Sites' own "Get notifications?" pop-ups shown before the browser's prompt (OneSignal, the most
+ * common: slide-down prompt, older popover, and the floating bell).
+ */
+#onesignal-slidedown-container,
+#onesignal-popover-container,
+#onesignal-bell-container {
+  /* biome-ignore lint/complexity/noImportantStyles: the prompts set their own inline styles */
+  display: none !important;
+}

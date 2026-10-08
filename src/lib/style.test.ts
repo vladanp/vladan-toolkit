@@ -9,7 +9,8 @@ describe('injectStyle', () => {
   it('adds a tagged stylesheet to the page and removes it on cleanup', () => {
     const remove = injectStyle(css, 'test');
     expect(ours(document)).toHaveLength(1);
-    expect(ours(document)[0]?.textContent).toBe(css);
+    // In a cascade layer, so its !important rules beat the page's own !important rules.
+    expect(ours(document)[0]?.textContent).toBe(`@layer vladan-toolkit {\n${css}\n}`);
 
     remove();
     expect(ours(document)).toHaveLength(0);

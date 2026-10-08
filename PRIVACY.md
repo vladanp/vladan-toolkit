@@ -13,9 +13,12 @@ its own. Everything runs inside your browser.
   - **Reddit** (www.reddit.com, old.reddit.com): a stylesheet that hides ads, awards and trending searches; when
     you switch it on, Reddit pages are opened on old.reddit.com.
   - **All websites:** cookie consent pop-ups are rejected or hidden (using DuckDuckGo's open-source
-    autoconsent rules, bundled in the extension), and tracking parameters such as `utm_source` and `fbclid`
-    are removed from web addresses. Chrome applies the address rules itself; no page content is read for it.
-  None of this reads, records or sends page content anywhere.
+    autoconsent rules, bundled in the extension); newsletter/sign-up pop-ups, chat widgets, sites' own
+    notification pop-ups, Google's one-tap sign-in prompt and (if you turn it on) sticky bars are hidden;
+    notification permission requests you didn't make are answered "no"; countdown timers and "only 2 left"
+    messages are outlined. To do this the extension looks at the page inside your browser. Tracking parameters
+    such as `utm_source` and `fbclid` are removed from web addresses; Chrome applies those rules itself.
+  None of this records or sends page content anywhere.
 - **The one outside service:** to skip sponsors, the extension asks [SponsorBlock](https://sponsor.ajay.app)
   (a free, community-run database) which parts of a video to skip. It sends only the **first 4 characters of a
   hash of the video's id**, which matches many unrelated videos, and picks the right video from the answer

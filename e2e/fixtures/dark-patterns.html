@@ -1,0 +1,41 @@
+<!doctype html>
+<!--
+  Offline model of a product page with pressure tactics (stock warnings, "people viewing", a ticking
+  sale countdown) and look-alikes that must stay as they are: normal stock text, a game clock ticking
+  down without any sales context, and a clock counting up next to "sale".
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example product</title>
+  </head>
+  <body>
+    <h1>Running shoes</h1>
+    <p id="price">$89.00</p>
+    <p id="in-stock">In stock</p>
+    <p id="low-stock">Hurry! Only <b>2</b> left in stock</p>
+    <div id="viewers"><span>12</span> people are viewing this right now</div>
+    <div id="sale-countdown">Sale ends in <span class="t">02</span>:<span class="t">14</span>:<span class="t">05</span></div>
+    <div id="game-clock">Q4 <span>11:20</span></div>
+    <div id="sale-uptime">Sale running for <span>00:00:01</span></div>
+    <button type="button" id="add-to-cart">Add to cart</button>
+
+    <script>
+      const pad = (n) => String(n).padStart(2, '0');
+      const show = (spans, total) => {
+        const parts = [Math.floor(total / 3600), Math.floor((total % 3600) / 60), total % 60];
+        spans.forEach((span, i) => { span.textContent = pad(parts[i]); });
+      };
+      let saleLeft = 2 * 3600 + 14 * 60 + 5;
+      let gameLeft = 11 * 60 + 20;
+      let uptime = 1;
+      setInterval(() => {
+        show([...document.querySelectorAll('#sale-countdown .t')], --saleLeft);
+        gameLeft--;
+        document.querySelector('#game-clock span').textContent = `${Math.floor(gameLeft / 60)}:${pad(gameLeft % 60)}`;
+        uptime++;
+        document.querySelector('#sale-uptime span').textContent = `00:00:${pad(uptime)}`;
+      }, 300);
+    </script>
+  </body>
+</html>

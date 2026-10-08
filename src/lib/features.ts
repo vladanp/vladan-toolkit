@@ -1,7 +1,7 @@
 import { storage } from '#imports';
 
 /** Where a feature works; the settings UI groups its switches by this, in this order. */
-export const featureGroups = ['YouTube', 'Reddit', 'All websites'] as const;
+export const featureGroups = ['YouTube', 'Reddit', 'Pop-ups', 'All websites'] as const;
 export type FeatureGroup = (typeof featureGroups)[number];
 
 export interface Feature {

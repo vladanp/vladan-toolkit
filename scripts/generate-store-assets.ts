@@ -48,8 +48,8 @@ await render(
        ${sizedIcon(88)}
        <h1 style="font-size:52px;line-height:1.1;margin:28px 0 16px">Less noise on YouTube, Reddit and the web</h1>
        <p style="font-size:24px;line-height:1.45;margin:0;color:#3730a3">
-         Skip sponsors, hide Shorts and watched videos, clean up Reddit, reject cookie banners and strip
-         link tracking. Switch each tweak on or off from the toolbar.</p>
+         Skip sponsors, hide Shorts, clean up Reddit, block pop-ups and cookie banners, strip link
+         tracking and spot fake urgency. Switch each tweak on or off from the toolbar.</p>
      </div>
      <img src="data:image/png;base64,${popupPng}" style="width:400px;border-radius:16px;box-shadow:0 24px 60px rgba(30,27,75,.25)">
    </div>`,

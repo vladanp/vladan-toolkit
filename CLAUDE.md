@@ -43,7 +43,9 @@ src/
     <feature-id>/     # one folder per feature: index.ts = definition only; logic, CSS, tests next to it
   components/         # shared React UI (FeatureToggles)
   lib/features.ts     # Feature type + groups, featureEnabled(), whileEnabled()
-  lib/style.ts        # injectStyle(): switchable <style> for a page or a shadow root
+  lib/style.ts        # injectStyle(): switchable <style> for a page or a shadow root (in a cascade layer)
+  lib/main-world.ts   # mainWorldSwitch(): a feature's switch inside the page's own JS world
+  lib/page-switch.ts  # shareSwitchWithPage(): isolated-world side of that
   lib/rulesets.ts     # Rule/Ruleset types, syncRuleset() (background)
   assets/global.css   # Tailwind entry for extension pages
 e2e/                  # Playwright tests; e2e/fixtures/ = offline models of real sites
@@ -70,6 +72,13 @@ public/icon/          # extension icons
      For page CSS: `whileEnabled(myFeature, () => injectStyle(css, myFeature.id))`, importing the CSS file with
      `?inline` (see `hide-youtube-shorts`). Don't use manifest-injected CSS: it can't be switched off. Elements
      inside a shadow root need `injectStyle(css, id, host.shadowRoot)` (see `clean-reddit/cleaner.ts`).
+     `injectStyle` puts the rules in a cascade layer, so write every declaration with `!important`: then they beat
+     the page's own `!important` rules whatever their specificity. To hide elements found by script, set a
+     `data-vladan-toolkit-*` attribute and style that (see `hide-newsletter-popups/detector.ts`); remove it in `undo`.
+   - Overriding page APIs (e.g. `Notification.requestPermission`): a `world: 'MAIN'` content script, run at
+     `document_start`, that reads the switch with `mainWorldSwitch(feature.id)`, plus an isolated content script
+     calling `shareSwitchWithPage(feature)` (see `block-notification-prompts`). Page-world code can't import
+     extension APIs or `#imports`, and must keep working when the switch is off (call the original API).
    - Background: check `await featureEnabled(myFeature).getValue()` before acting, and use
      `featureEnabled(myFeature).watch(...)` to add/remove listeners, context menus, alarms, etc.
      Content script ↔ background: a request object tagged with the feature id, answered via `sendResponse`

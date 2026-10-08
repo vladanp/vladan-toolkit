@@ -46,7 +46,7 @@ function FeatureToggle({ feature, compact }: { feature: Feature; compact: boolea
   const checked = enabled ?? feature.enabledByDefault;
   return (
     <li
-      className={`flex items-start gap-3 ${compact ? 'py-2' : 'py-3'}`}
+      className={`flex items-start gap-3 ${compact ? 'py-1' : 'py-3'}`}
       title={compact ? feature.description : undefined}
     >
       <input

@@ -12,8 +12,14 @@ Built with [WXT](https://wxt.dev), React 19, TypeScript 7 and Tailwind CSS v4.
 | YouTube | Skip sponsors in YouTube videos | Skips sponsor segments, self-promotion, subscribe reminders and intros, with an Undo notice. Segment data from [SponsorBlock](https://sponsor.ajay.app) (CC BY-NC-SA 4.0), looked up privately by hash prefix | On |
 | Reddit | Reddit cleaner | Hides promoted posts and other ads, awards, and "Trending today" in search (new and old Reddit) | On |
 | Reddit | Always use old Reddit | Opens Reddit pages on old.reddit.com (Reddit requires being logged in for old Reddit; links clicked on old Reddit still reach new Reddit) | Off |
-| All websites | Reject cookie banners | Rejects cookie consent pop-ups, or hides them when there is no way to reject (DuckDuckGo's [autoconsent](https://github.com/duckduckgo/autoconsent), MPL-2.0) | On |
+| Pop-ups | Reject cookie banners | Rejects cookie consent pop-ups, or hides them when there is no way to reject (DuckDuckGo's [autoconsent](https://github.com/duckduckgo/autoconsent), MPL-2.0) | On |
+| Pop-ups | Hide newsletter and sign-up pop-ups | Hides overlays that ask for your email or offer a discount for signing up, with their backdrop, and unlocks scrolling. Forms you open yourself stay | On |
+| Pop-ups | Hide chat widgets | Hides "Chat with us" bubbles and support chats (Intercom, Drift, Zendesk, HubSpot, Crisp, Tawk.to, LiveChat, Tidio and more) | On |
+| Pop-ups | Decline "Allow notifications?" prompts | Answers notification requests the page makes on its own with "denied" before Chrome asks, and hides OneSignal's prompts. Sites already allowed and buttons you click still work | On |
+| Pop-ups | Hide "Sign in with Google" pop-ups | Stops Google's one-tap sign-in prompt (browser and iframe versions); "Sign in with Google" buttons still work | On |
+| Pop-ups | Hide sticky headers and footers | Hides bars stuck to the top or bottom while you're scrolled down a page; they come back at the top | Off |
 | All websites | Remove tracking from links | Strips `utm_*`, `fbclid`, `gclid` and other tracking parameters from addresses before pages load | On |
+| All websites | Dark pattern detector | Outlines and fades countdown timers and "only 2 left!" / "12 people are viewing" messages, so they don't rush you | On |
 
 ## Quick start
 ```bash
