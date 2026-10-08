@@ -1,13 +1,21 @@
+import { FeatureToggles } from '@/components/FeatureToggles';
 import { getVersionLabel } from '@/lib/version';
 
 export default function App() {
   return (
-    <main className="w-72 p-4 font-sans">
+    <main className="w-80 p-4 font-sans">
       <h1 className="text-lg font-semibold">Vladan Toolkit</h1>
-      <p className="mt-1 text-sm text-neutral-500">No features yet. Add the first one!</p>
-      <p data-testid="version" className="mt-4 text-xs text-neutral-400">
-        {getVersionLabel(browser.runtime.getManifest().version)}
-      </p>
+      <FeatureToggles />
+      <footer className="mt-2 flex items-center justify-between text-xs text-neutral-400">
+        <button
+          type="button"
+          className="text-blue-600 hover:underline dark:text-blue-400"
+          onClick={() => browser.runtime.openOptionsPage()}
+        >
+          All settings
+        </button>
+        <span data-testid="version">{getVersionLabel(browser.runtime.getManifest().version)}</span>
+      </footer>
     </main>
   );
 }

@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+  Minimal model of www.youtube.com markup (verified against the live site 2026-10-08 where possible).
+  Every Shorts element has a regular-video twin with the same tag, so the test proves we hide Shorts
+  without hiding normal content. Served by e2e/hide-youtube-shorts.spec.ts in place of the real site.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>YouTube</title>
+    <style>
+      body > * { display: block; margin: 4px; }
+    </style>
+  </head>
+  <body>
+    <!-- Left menu, full and collapsed -->
+    <ytd-guide-entry-renderer id="guide-home"><a id="endpoint" title="Home">Home</a></ytd-guide-entry-renderer>
+    <ytd-guide-entry-renderer id="guide-shorts"><a id="endpoint" title="Shorts">Shorts</a></ytd-guide-entry-renderer>
+    <ytd-mini-guide-entry-renderer id="mini-guide-home" aria-label="Home">Home</ytd-mini-guide-entry-renderer>
+    <ytd-mini-guide-entry-renderer id="mini-guide-shorts" aria-label="Shorts">Shorts</ytd-mini-guide-entry-renderer>
+
+    <!-- Home / subscriptions feed -->
+    <ytd-rich-section-renderer id="home-shorts-shelf">
+      <ytd-rich-shelf-renderer is-shorts>Shorts shelf</ytd-rich-shelf-renderer>
+    </ytd-rich-section-renderer>
+    <ytd-rich-section-renderer id="home-news-shelf">
+      <ytd-rich-shelf-renderer>Breaking news shelf</ytd-rich-shelf-renderer>
+    </ytd-rich-section-renderer>
+    <ytd-rich-item-renderer id="home-video"><a href="/watch?v=video1">Regular video</a></ytd-rich-item-renderer>
+    <ytd-rich-item-renderer id="home-short"><a href="/shorts/short1">A short</a></ytd-rich-item-renderer>
+
+    <!-- Search results -->
+    <grid-shelf-view-model id="search-shorts-shelf">
+      <ytm-shorts-lockup-view-model-v2>
+        <ytm-shorts-lockup-view-model><a href="/shorts/short2">A short</a></ytm-shorts-lockup-view-model>
+      </ytm-shorts-lockup-view-model-v2>
+    </grid-shelf-view-model>
+    <grid-shelf-view-model id="search-video-grid"><a href="/watch?v=video2">Regular grid</a></grid-shelf-view-model>
+    <ytd-video-renderer id="search-video"><a href="/watch?v=video3">Regular result</a></ytd-video-renderer>
+    <ytd-video-renderer id="search-short"><a href="/shorts/short3">Short result</a></ytd-video-renderer>
+    <ytd-reel-shelf-renderer id="reel-shelf">Reel shelf</ytd-reel-shelf-renderer>
+
+    <!-- Watch page sidebar -->
+    <ytd-compact-video-renderer id="compact-video"><a href="/watch?v=video4">Related video</a></ytd-compact-video-renderer>
+    <ytd-compact-video-renderer id="compact-short"><a href="/shorts/short4">Related short</a></ytd-compact-video-renderer>
+    <yt-lockup-view-model id="lockup-video"><a href="/watch?v=video5">Lockup video</a></yt-lockup-view-model>
+    <yt-lockup-view-model id="lockup-short"><a href="/shorts/short5">Lockup short</a></yt-lockup-view-model>
+
+    <!-- Channel page -->
+    <yt-tab-shape id="tab-videos" tab-title="Videos">Videos</yt-tab-shape>
+    <yt-tab-shape id="tab-shorts" tab-title="Shorts">Shorts</yt-tab-shape>
+    <ytd-grid-video-renderer id="grid-video"><a href="/watch?v=video6">Channel video</a></ytd-grid-video-renderer>
+    <ytd-grid-video-renderer id="grid-short"><a href="/shorts/short6">Channel short</a></ytd-grid-video-renderer>
+  </body>
+</html>

@@ -3,9 +3,9 @@ import { resolve } from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'wxt';
 
-// Persistent dev profile so logins survive `pnpm dev` restarts. Git-ignored via `.wxt/`.
-// web-ext needs an absolute path that already exists, or it falls back to a throwaway temp profile.
-const chromiumProfile = resolve('.wxt/chrome-data');
+// Persistent dev profile so logins survive `pnpm dev` restarts (git-ignored; outside `.wxt/`, which
+// `wxt clean` wipes). web-ext needs an absolute path that already exists, or it uses a temp profile.
+const chromiumProfile = resolve('.chrome-dev-profile');
 mkdirSync(chromiumProfile, { recursive: true });
 
 // See https://wxt.dev/api/config.html
@@ -19,8 +19,8 @@ export default defineConfig({
   manifest: {
     name: 'Vladan Toolkit',
     description: 'A personal Chrome toolkit that grows one feature at a time.',
-    // Add permissions only when a feature needs them (see CLAUDE.md).
-    permissions: [],
+    // Only what features need (see CLAUDE.md). `storage`: per-feature on/off settings.
+    permissions: ['storage'],
   },
   webExt: {
     chromiumProfile,

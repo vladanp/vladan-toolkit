@@ -1,0 +1,24 @@
+/*
+ * Shorts on www.youtube.com (desktop). Structural selectors only, so they work in any UI language
+ * ("Shorts" is a product name YouTube doesn't translate). Grouped by where they appear.
+ */
+
+/* Left menu (full + collapsed) */
+ytd-guide-entry-renderer:has(a[title="Shorts"]),
+ytd-mini-guide-entry-renderer[aria-label="Shorts"],
+/* Home + subscriptions: the Shorts shelf and individual Shorts tiles */
+ytd-rich-section-renderer:has(ytd-rich-shelf-renderer[is-shorts]),
+ytd-rich-shelf-renderer[is-shorts],
+ytd-rich-item-renderer:has(a[href^="/shorts/"]),
+/* Search + watch page: Shorts shelves and individual Shorts results */
+grid-shelf-view-model:has(ytm-shorts-lockup-view-model-v2, ytm-shorts-lockup-view-model),
+ytd-reel-shelf-renderer,
+ytd-video-renderer:has(a[href^="/shorts/"]),
+ytd-compact-video-renderer:has(a[href^="/shorts/"]),
+yt-lockup-view-model:has(a[href^="/shorts/"]),
+/* Channel pages: the Shorts tab and Shorts grid items */
+yt-tab-shape[tab-title="Shorts"],
+ytd-grid-video-renderer:has(a[href^="/shorts/"]) {
+  /* biome-ignore lint/complexity/noImportantStyles: must win over YouTube's own (often inline) styles */
+  display: none !important;
+}

@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './style.css';
+import '@/assets/global.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Popup root element not found');
