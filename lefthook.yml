@@ -1,0 +1,25 @@
+# Git hooks, installed automatically by `pnpm install` (see the "prepare" script).
+
+# Fast (~1s): auto-fix format/lint on staged files only, plus a typecheck (TypeScript 7 is native-speed).
+pre-commit:
+  parallel: true
+  jobs:
+    - name: biome
+      glob: "*.{js,mjs,ts,jsx,tsx,json,jsonc,css}"
+      run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
+      stage_fixed: true
+    - name: typecheck
+      glob: "*.{ts,tsx,mjs}"
+      run: pnpm typecheck
+
+# Conventional commits (feat:, fix:, ...) drive automatic versioning + CHANGELOG.
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: pnpm commitlint --edit {1}
+
+# Full gate: nothing reaches GitHub unless typecheck, lint, unit tests, build and e2e are green.
+pre-push:
+  jobs:
+    - name: verify
+      run: pnpm verify

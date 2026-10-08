@@ -1,0 +1,37 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Dependencies & build output
+node_modules
+.output
+stats.html
+stats-*.json
+
+# WXT generated files + persistent dev Chrome profile (contains your logins!)
+.wxt
+web-ext.config.ts
+
+# Secrets (this repo is PUBLIC)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Test output
+test-results
+playwright-report
+blob-report
+coverage
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+.DS_Store
+*.suo
+*.sw?

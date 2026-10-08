@@ -1,0 +1,49 @@
+{
+  "name": "vladan-toolkit",
+  "displayName": "Vladan Toolkit",
+  "description": "A personal Chrome toolkit that grows one feature at a time.",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@12.10.1",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "wxt",
+    "build": "wxt build",
+    "zip": "wxt zip",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "check": "pnpm typecheck && biome ci .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "pnpm build && playwright test",
+    "e2e:install": "node e2e/install-browsers.mjs",
+    "verify": "pnpm check && pnpm test && pnpm e2e",
+    "submit": "wxt submit",
+    "postinstall": "wxt prepare && node e2e/install-browsers.mjs",
+    "prepare": "lefthook install"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@wxt-dev/module-react": "^1.2.2",
+    "lefthook": "^2.1.17",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3",
+    "wxt": "^0.21.4"
+  }
+}
