@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!CHANGELOG.md", "!pnpm-lock.yaml"]
+    "includes": ["**", "!CHANGELOG.md", "!pnpm-lock.yaml", "!e2e/fixtures"]
   },
   "formatter": {
     "enabled": true,

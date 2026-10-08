@@ -12,7 +12,11 @@ stats-*.json
 
 # WXT generated files + persistent dev Chrome profile (contains your logins!)
 .wxt
+.chrome-dev-profile
 web-ext.config.ts
+
+# Machine-local Claude Code settings
+.claude/settings.local.json
 
 # Secrets (this repo is PUBLIC)
 .env

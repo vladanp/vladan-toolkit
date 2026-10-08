@@ -1,24 +1,25 @@
-// pre-push guard: `pnpm verify` tests the working tree, so the tree must be exactly what is pushed.
-import { execFileSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
+// pre-push hook: verify exactly what is being pushed (see scripts/push-guard.ts for the rules).
+import { execFileSync, spawnSync } from 'node:child_process';
+import { readdirSync, readFileSync } from 'node:fs';
+import { decidePush } from './push-guard.ts';
 
 const git = (...args: string[]) => execFileSync('git', args, { encoding: 'utf8' }).trim();
 
-function fail(message: string): never {
-  console.error(`\n✖ ${message}\n`);
+const { errors, verify } = decidePush({
+  stdin: readFileSync(0, 'utf8'),
+  head: git('rev-parse', 'HEAD'),
+  status: git('status', '--porcelain'),
+  rootFiles: readdirSync('.'),
+});
+
+if (errors.length > 0) {
+  for (const error of errors) console.error(`\n✖ ${error}`);
   process.exit(1);
 }
-
-const dirty = git('status', '--porcelain');
-if (dirty) {
-  fail(`Uncommitted changes would be verified instead of your commits. Commit or stash:\n${dirty}`);
+if (!verify) {
+  console.log('Only tags/deletions pushed: skipping verify.');
+  process.exit(0);
 }
 
-// Git passes one line per ref on stdin: <local ref> <local sha> <remote ref> <remote sha>
-const head = git('rev-parse', 'HEAD');
-for (const line of readFileSync(0, 'utf8').split('\n')) {
-  const [localRef, localSha] = line.trim().split(' ');
-  if (!localRef || !localSha || /^0+$/.test(localSha) || localRef.startsWith('refs/tags/'))
-    continue;
-  if (localSha !== head) fail(`${localRef} is not checked out. Check it out before pushing it.`);
-}
+const result = spawnSync('pnpm verify', { stdio: 'inherit', shell: true });
+process.exit(result.status ?? 1);
