@@ -48,6 +48,7 @@ jobs:
           name: vladan-toolkit-chrome
           path: .output/*-chrome.zip
           if-no-files-found: error
+          include-hidden-files: true # .output is a dot-folder
 
       - uses: actions/upload-artifact@v4
         if: failure()
