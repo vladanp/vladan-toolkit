@@ -1,9 +1,19 @@
+import { features } from '../src/features/registry';
 import { expect, test } from './fixtures';
 
-test('popup shows a switch per feature and the version', async ({ page, extensionId }) => {
+test('popup shows every feature switch, grouped by site, and the version', async ({
+  page,
+  extensionId,
+}) => {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
   await expect(page.getByRole('heading', { name: 'Vladan Toolkit' })).toBeVisible();
-  await expect(page.getByRole('switch', { name: 'Hide YouTube Shorts' })).toBeChecked();
+  for (const feature of features) {
+    const group = page.getByRole('region', { name: feature.group });
+    const toggle = group.getByRole('switch', { name: feature.name });
+    if (feature.enabledByDefault) await expect(toggle, feature.id).toBeChecked();
+    else await expect(toggle, feature.id).not.toBeChecked();
+  }
+  await expect(page.getByRole('switch')).toHaveCount(features.length);
   await expect(page.getByTestId('version')).toHaveText(/^v\d+\.\d+\.\d+$/);
 });
 

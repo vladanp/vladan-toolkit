@@ -5,6 +5,7 @@ const feature: Feature = {
   id: 'test-feature',
   name: 'Test feature',
   description: 'For tests',
+  group: 'All websites',
   enabledByDefault: true,
 };
 

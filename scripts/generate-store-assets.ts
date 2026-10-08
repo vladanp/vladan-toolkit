@@ -19,7 +19,7 @@ const extensionUrl = (page: string) => `chrome-extension://${new URL(worker.url(
 
 // The popup at 2x, to embed in the marketing screenshot.
 const popupPage = await context.newPage();
-await popupPage.setViewportSize({ width: 320, height: 200 });
+await popupPage.setViewportSize({ width: 320, height: 600 });
 await popupPage.goto(extensionUrl('popup.html'));
 // The version label would go stale with every release.
 await popupPage.addStyleTag({ content: '[data-testid="version"]{visibility:hidden}' });
@@ -46,14 +46,14 @@ await render(
   `<div style="display:flex;align-items:center;gap:80px;height:100%;padding:0 100px;box-sizing:border-box">
      <div style="flex:1">
        ${sizedIcon(88)}
-       <h1 style="font-size:56px;line-height:1.1;margin:28px 0 16px">Hide YouTube Shorts</h1>
-       <p style="font-size:26px;line-height:1.45;margin:0;color:#3730a3">
-         Shorts shelves, Shorts in your feed and search, and the Shorts menu entries &mdash; gone.
-         Switch it off any time from the toolbar.</p>
+       <h1 style="font-size:52px;line-height:1.1;margin:28px 0 16px">Less noise on YouTube, Reddit and the web</h1>
+       <p style="font-size:24px;line-height:1.45;margin:0;color:#3730a3">
+         Skip sponsors, hide Shorts and watched videos, clean up Reddit, reject cookie banners and strip
+         link tracking. Switch each tweak on or off from the toolbar.</p>
      </div>
-     <img src="data:image/png;base64,${popupPng}" style="width:440px;border-radius:16px;box-shadow:0 24px 60px rgba(30,27,75,.25)">
+     <img src="data:image/png;base64,${popupPng}" style="width:400px;border-radius:16px;box-shadow:0 24px 60px rgba(30,27,75,.25)">
    </div>`,
-  'screenshot-1-hide-shorts.png',
+  'screenshot-1-toolkit.png',
 );
 
 // 2. Small promo tile (440x280).

@@ -1,0 +1,60 @@
+<!doctype html>
+<!--
+  Offline model of new Reddit (www.reddit.com, "shreddit" web components): ads, awards and the search
+  box, whose dropdown (with "Trending today") lives in an open shadow root. Every hidden kind of
+  element has a look-alike that must stay visible.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Reddit - The heart of the internet</title>
+  </head>
+  <body>
+    <shreddit-app>
+      <reddit-header-large>
+        <reddit-search-large id="search">
+          <template shadowrootmode="open">
+            <div id="search-dropdown-results-container">
+              <ul role="menu" id="reddit-trending-searches-partial-container">
+                <li id="trending">Trending today: something viral</li>
+              </ul>
+              <ul role="menu" id="reddit-typeahead-results-partial-container">
+                <li id="typeahead">r/AskReddit</li>
+              </ul>
+            </div>
+          </template>
+        </reddit-search-large>
+      </reddit-header-large>
+
+      <main id="main-content">
+        <shreddit-feed>
+          <article><shreddit-post id="post">A regular post
+            <div slot="actionRow">
+              <button data-post-click-location="comments-button" id="comments-button">42 comments</button>
+              <button data-post-click-location="award-button" id="post-award">Award</button>
+              <button data-post-click-location="share" id="share-button">Share</button>
+            </div>
+          </shreddit-post></article>
+          <article><shreddit-ad-post id="ad-post">Promoted: buy things</shreddit-ad-post></article>
+          <shreddit-dynamic-ad-link id="dynamic-ad">Sponsored link</shreddit-dynamic-ad-link>
+        </shreddit-feed>
+
+        <shreddit-comments-page-ad id="comments-ad">Promoted under the post</shreddit-comments-page-ad>
+        <shreddit-comment-tree id="comment-tree">
+          <shreddit-comment id="comment">A comment
+            <shreddit-comment-action-row>
+              <button id="reply-button">Reply</button>
+              <award-button id="comment-award" slot="comment-award">Award</award-button>
+            </shreddit-comment-action-row>
+          </shreddit-comment>
+          <shreddit-comment-tree-ad id="comment-tree-ad">Promoted between comments</shreddit-comment-tree-ad>
+        </shreddit-comment-tree>
+      </main>
+
+      <aside id="right-sidebar-container">
+        <shreddit-sidebar-ad id="sidebar-ad">Sidebar ad</shreddit-sidebar-ad>
+        <div id="sidebar-community">About this community</div>
+      </aside>
+    </shreddit-app>
+  </body>
+</html>

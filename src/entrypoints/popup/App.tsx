@@ -5,7 +5,7 @@ export default function App() {
   return (
     <main className="w-80 p-4 font-sans">
       <h1 className="text-lg font-semibold">Vladan Toolkit</h1>
-      <FeatureToggles />
+      <FeatureToggles compact />
       <footer className="mt-2 flex items-center justify-between text-xs text-neutral-400">
         <button
           type="button"

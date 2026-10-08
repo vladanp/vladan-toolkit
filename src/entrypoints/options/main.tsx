@@ -13,10 +13,7 @@ createRoot(root).render(
       <p className="mt-1 text-sm text-neutral-500">
         Turn features on or off. Changes apply immediately, also on open tabs.
       </p>
-      <section className="mt-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">Features</h2>
-        <FeatureToggles />
-      </section>
+      <FeatureToggles />
     </main>
   </StrictMode>,
 );

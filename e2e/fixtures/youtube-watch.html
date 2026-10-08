@@ -1,0 +1,17 @@
+<!doctype html>
+<!-- Offline model of a YouTube watch page: the main player's <video> (plays a silent WAV). -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sponsor test - YouTube</title>
+  </head>
+  <body>
+    <ytd-app>
+      <div id="movie_player" class="html5-video-player" style="position: relative; width: 640px; height: 360px">
+        <video class="html5-main-video" muted preload="auto" src="/test-media/silence.wav"></video>
+      </div>
+      <!-- A hover preview elsewhere on the page: never skipped. -->
+      <div id="inline-preview-player"><video id="preview" muted src="/test-media/silence.wav"></video></div>
+    </ytd-app>
+  </body>
+</html>

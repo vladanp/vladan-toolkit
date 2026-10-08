@@ -39,9 +39,12 @@ src/
     <feature>.content.ts  # content scripts, one per feature
   features/
     registry.ts       # THE list of features (drives the switches)
-    <feature-id>/     # one folder per feature: definition, logic, assets, tests
+    rulesets.ts       # network-rule features (declarativeNetRequest), read by wxt.config.ts
+    <feature-id>/     # one folder per feature: index.ts = definition only; logic, CSS, tests next to it
   components/         # shared React UI (FeatureToggles)
-  lib/features.ts     # Feature type, featureEnabled(), whileEnabled()
+  lib/features.ts     # Feature type + groups, featureEnabled(), whileEnabled()
+  lib/style.ts        # injectStyle(): switchable <style> for a page or a shadow root
+  lib/rulesets.ts     # Rule/Ruleset types, syncRuleset() (background)
   assets/global.css   # Tailwind entry for extension pages
 e2e/                  # Playwright tests; e2e/fixtures/ = offline models of real sites
 scripts/              # repo tooling (pre-push guard)
@@ -55,39 +58,55 @@ public/icon/          # extension icons
      id: 'my-feature',            // kebab-case, never rename (it's the storage key)
      name: 'My feature',          // shown next to the switch
      description: 'What it does, in one sentence.',
+     group: 'YouTube',            // settings section: one of featureGroups in lib/features.ts (add one if needed)
      enabledByDefault: true,
    } satisfies Feature;
    ```
+   Keep `index.ts` to the definition: the popup imports every one. Heavy logic goes in other files.
 2. **Register it** in `src/features/registry.ts`. The popup and settings page then show its switch automatically.
 3. **Gate all behavior on the switch** (it must apply live, without reloading pages):
    - Content script: `src/entrypoints/<feature-id>.content.ts` with
      `const stop = await whileEnabled(myFeature, () => { start(); return undo; }); ctx.onInvalidated(stop);`
-     For page CSS, inject a `<style>` (import the file with `?inline`) and remove it in `undo`
-     (see `src/features/hide-youtube-shorts/`). Don't use manifest-injected CSS: it can't be switched off.
+     For page CSS: `whileEnabled(myFeature, () => injectStyle(css, myFeature.id))`, importing the CSS file with
+     `?inline` (see `hide-youtube-shorts`). Don't use manifest-injected CSS: it can't be switched off. Elements
+     inside a shadow root need `injectStyle(css, id, host.shadowRoot)` (see `clean-reddit/cleaner.ts`).
    - Background: check `await featureEnabled(myFeature).getValue()` before acting, and use
      `featureEnabled(myFeature).watch(...)` to add/remove listeners, context menus, alarms, etc.
+     Content script ↔ background: a request object tagged with the feature id, answered via `sendResponse`
+     (see `reject-cookie-banners/protocol.ts` and `entrypoints/background.ts`).
+   - Network rules (redirects, removing URL parameters, blocking): write the declarativeNetRequest rules in
+     `src/features/<feature-id>/rules.ts` as `{ id: '<feature-id>', rules }` and add it to
+     `src/features/rulesets.ts`. The build writes `rules/<id>.json` + the manifest entry, and the background
+     switches the ruleset with the feature. Test with a real local server (see `e2e/remove-tracking-params.spec.ts`).
+   - Calls to outside services: prefer ones with CORS so the content script can call them without new
+     permissions, send as little as possible (see SponsorBlock's hash prefix), and add them to `PRIVACY.md`.
 4. **Other places it can run**:
    - Content-script UI → `<feature-id>.content/index.tsx` with `createShadowRootUi`. Caution: Tailwind v4 utilities
      that rely on `@property` (shadows, gradients, transforms) may not render inside a shadow root.
    - Side panel → `src/entrypoints/sidepanel/` (WXT adds the `sidePanel` permission itself). Because the toolbar
      icon opens the popup, open the panel with `browser.sidePanel.open()` from a click (e.g. a popup button).
 5. **Permissions**: add only what the feature needs to `manifest.permissions` / `host_permissions` in
-   `wxt.config.ts` (content-script `matches` already grant access to those sites). `storage` is already on.
-   Prefer `activeTab` and optional permissions over broad host access.
+   `wxt.config.ts` (content-script `matches` already grant access to those sites), with a comment saying which
+   feature needs it. Already on: `storage`, `scripting`, `declarativeNetRequestWithHostAccess`, and host access to
+   all websites (`*://*/*`, for cookie banners and tracking parameters). Adding a permission makes Chrome disable
+   the extension for store users until they accept it, so avoid new ones where possible.
 6. **Tests**:
    - Unit tests next to the code (`*.test.ts`; `vitest.setup.ts` resets the fake `browser` before each test).
      Tests needing a DOM start with `// @vitest-environment happy-dom`.
-   - E2E: add a spec covering the feature **on and off** (toggle via the popup's switch). For site features,
-     serve an offline model of the site with `context.route(...)` (see `e2e/hide-youtube-shorts.spec.ts`);
-     include look-alike elements that must NOT be affected.
-   - For site features, also check once against the live site before shipping (sites change markup).
+   - E2E: add a spec covering the feature **on and off** (toggle with `setFeature(...)` from `e2e/fixtures.ts`,
+     which uses the popup's switch). For site features, serve an offline model of the site with
+     `context.route(..., route => route.fulfill(servePage('<file>.html')))` (see `e2e/hide-youtube-shorts.spec.ts`);
+     include look-alike elements that must NOT be affected. Stub outside services the same way.
+   - For site features, also check once against the live site before shipping (sites change markup). Headless
+     Chromium gets bot walls on some sites (e.g. Reddit): give it a regular Chrome `userAgent`.
 7. **Store listing**: add the feature to `store/LISTING.md` (description; permission justifications if
    permissions/sites changed), `PRIVACY.md` (if it touches new sites or data) and README's feature table.
    Run `pnpm store-assets` if the popup changed. The user pastes listing changes into the dashboard.
 8. **Verify**: `pnpm verify`, then commit with `feat: <what it does>` (drives the version bump + changelog).
 
 ## Rules
-- MV3 only; no remotely hosted code, no `eval`/`new Function` (Chrome Web Store policy).
+- MV3 only; no remotely hosted code, no `eval`/`new Function` (Chrome Web Store policy). Code run in a page's
+  main world (`browser.scripting.executeScript({ world: 'MAIN', func })`) must be a bundled function.
 - `browser.*` (WXT's global) instead of `chrome.*`.
 - Settings/state via WXT storage (`import { storage } from '#imports'`), never `localStorage`.
 - Tailwind utility classes for extension pages; no extra CSS frameworks.

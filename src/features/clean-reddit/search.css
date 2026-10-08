@@ -1,0 +1,5 @@
+/* Inside the shadow root of <reddit-search-large>: the "Trending today" list in the search dropdown. */
+#reddit-trending-searches-partial-container {
+  /* biome-ignore lint/complexity/noImportantStyles: must win over Reddit's own styles */
+  display: none !important;
+}

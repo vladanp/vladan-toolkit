@@ -1,0 +1,42 @@
+<!doctype html>
+<!--
+  Offline model of a site with a cookie banner from a common consent manager (Complianz), plus an
+  unrelated dialog with its own "Reject" button that must not be touched.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example shop</title>
+  </head>
+  <body>
+    <h1>Example shop</h1>
+
+    <div role="dialog" id="friend-request">
+      Ana sent you a friend request.
+      <button type="button" id="friend-reject">Reject</button>
+    </div>
+
+    <div id="cmplz-cookiebanner-container">
+      <div class="cmplz-cookiebanner" id="cookie-banner" role="dialog" aria-label="Cookie consent">
+        We use cookies and similar technologies for advertising and analytics. You can accept or
+        deny them.
+        <button type="button" class="cmplz-btn cmplz-accept">Accept all</button>
+        <button type="button" class="cmplz-btn cmplz-deny">Deny</button>
+      </div>
+    </div>
+
+    <script>
+      const banner = document.getElementById('cookie-banner');
+      const choose = (choice) => {
+        document.body.dataset.consent = choice;
+        document.cookie = 'cmplz_banner-status=dismissed';
+        banner.style.display = 'none';
+      };
+      banner.querySelector('.cmplz-accept').addEventListener('click', () => choose('accepted'));
+      banner.querySelector('.cmplz-deny').addEventListener('click', () => choose('denied'));
+      document.getElementById('friend-reject').addEventListener('click', () => {
+        document.body.dataset.friend = 'rejected';
+      });
+    </script>
+  </body>
+</html>

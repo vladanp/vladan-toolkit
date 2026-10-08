@@ -1,0 +1,30 @@
+/*
+ * Reddit clutter, on new Reddit (www.reddit.com, "shreddit" web components) and old.reddit.com.
+ * "Trending today" lives in the search box's shadow root: see search.css.
+ */
+
+/* New Reddit: promoted posts and ads in feeds, comments and the sidebar */
+shreddit-ad-post,
+shreddit-comments-page-ad,
+shreddit-comment-tree-ad,
+shreddit-sidebar-ad,
+shreddit-dynamic-ad-link,
+/* New Reddit: award buttons and counts on posts and comments */
+award-button,
+[data-post-click-location="award-button"],
+[data-action-bar-action="award-button"],
+/* Old Reddit: promoted posts and sidebar ads */
+.thing.promoted,
+.promotedlink,
+#siteTable_organic,
+.ad-container,
+#ad_main,
+/* Old Reddit: awards */
+.awardings-bar,
+.gilded-icon,
+.give-gold-button,
+/* Old Reddit: trending subreddits bar */
+.trending-subreddits {
+  /* biome-ignore lint/complexity/noImportantStyles: must win over Reddit's own styles */
+  display: none !important;
+}

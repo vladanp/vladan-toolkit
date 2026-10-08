@@ -1,0 +1,61 @@
+<!doctype html>
+<!--
+  Offline model of YouTube's Subscriptions feed (and, for contrast, the Home feed: same markup, but
+  must be left alone). Watched videos carry the red progress bar on their thumbnail.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Subscriptions - YouTube</title>
+  </head>
+  <body>
+    <ytd-page-manager>
+      <ytd-browse page-subtype="subscriptions">
+        <div id="contents">
+          <ytd-rich-item-renderer id="sub-watched">
+            <yt-lockup-view-model>
+              <yt-thumbnail-view-model class="ytThumbnailViewModelHost">
+                <yt-thumbnail-bottom-overlay-view-model class="ytThumbnailBottomOverlayViewModelHost">
+                  <div class="ytThumbnailBottomOverlayViewModelBadgeContainer">12:34</div>
+                  <yt-thumbnail-overlay-progress-bar-view-model class="ytThumbnailOverlayProgressBarHost ytThumbnailOverlayProgressBarHostLarge">
+                    <div class="ytThumbnailOverlayProgressBarHostWatchedProgressBar">
+                      <div class="ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment" style="width: 40%"></div>
+                    </div>
+                  </yt-thumbnail-overlay-progress-bar-view-model>
+                </yt-thumbnail-bottom-overlay-view-model>
+              </yt-thumbnail-view-model>
+              <a href="/watch?v=watched0001">A video I watched</a>
+            </yt-lockup-view-model>
+          </ytd-rich-item-renderer>
+
+          <ytd-rich-item-renderer id="sub-watched-legacy">
+            <ytd-thumbnail><ytd-thumbnail-overlay-resume-playback-renderer><div id="progress" style="width: 100%"></div></ytd-thumbnail-overlay-resume-playback-renderer></ytd-thumbnail>
+            <a href="/watch?v=watched0002">A video I watched (legacy layout)</a>
+          </ytd-rich-item-renderer>
+
+          <ytd-rich-item-renderer id="sub-unwatched">
+            <yt-lockup-view-model>
+              <yt-thumbnail-view-model class="ytThumbnailViewModelHost">
+                <yt-thumbnail-bottom-overlay-view-model class="ytThumbnailBottomOverlayViewModelHost">
+                  <div class="ytThumbnailBottomOverlayViewModelBadgeContainer">8:01</div>
+                </yt-thumbnail-bottom-overlay-view-model>
+              </yt-thumbnail-view-model>
+              <a href="/watch?v=unwatched01">A new video</a>
+            </yt-lockup-view-model>
+          </ytd-rich-item-renderer>
+        </div>
+      </ytd-browse>
+
+      <ytd-browse page-subtype="home">
+        <ytd-rich-item-renderer id="home-watched">
+          <yt-lockup-view-model>
+            <yt-thumbnail-overlay-progress-bar-view-model class="ytThumbnailOverlayProgressBarHost">
+              <div class="ytThumbnailOverlayProgressBarHostWatchedProgressBarSegment" style="width: 40%"></div>
+            </yt-thumbnail-overlay-progress-bar-view-model>
+            <a href="/watch?v=watched0001">A video I watched, in Home</a>
+          </yt-lockup-view-model>
+        </ytd-rich-item-renderer>
+      </ytd-browse>
+    </ytd-page-manager>
+  </body>
+</html>

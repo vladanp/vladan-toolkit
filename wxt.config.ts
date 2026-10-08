@@ -2,6 +2,7 @@ import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'wxt';
+import { rulesets } from './src/features/rulesets';
 
 // Persistent dev profile so logins survive `pnpm dev` restarts (git-ignored; outside `.wxt/`, which
 // `wxt clean` wipes). web-ext needs an absolute path that already exists, or it uses a temp profile.
@@ -20,9 +21,25 @@ export default defineConfig({
     name: 'Vladan Toolkit',
     // Shown as the Web Store summary (max 132 chars).
     description:
-      'Hide distractions on the sites you use, starting with YouTube Shorts. Switch each tweak on or off.',
-    // Only what features need (see CLAUDE.md). `storage`: per-feature on/off settings.
-    permissions: ['storage'],
+      'Skip YouTube sponsors, hide Shorts, reject cookie banners, strip link tracking, clean up Reddit. Each tweak can be switched off.',
+    // Only what features need (see CLAUDE.md):
+    // - storage: per-feature on/off settings
+    // - scripting: cookie banners (autoconsent's built-in snippets for some consent pop-ups)
+    // - declarativeNetRequestWithHostAccess: tracking parameters, old Reddit (network rules)
+    permissions: ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'],
+    // Cookie banners and tracking parameters work on every website.
+    host_permissions: ['*://*/*'],
+    // Disabled here; the background enables each ruleset while its feature's switch is on.
+    declarative_net_request: {
+      rule_resources: rulesets.map(({ id }) => ({ id, enabled: false, path: `rules/${id}.json` })),
+    },
+  },
+  hooks: {
+    'build:publicAssets': (_wxt, files) => {
+      for (const { id, rules } of rulesets) {
+        files.push({ relativeDest: `rules/${id}.json`, contents: JSON.stringify(rules) });
+      }
+    },
   },
   webExt: {
     chromiumProfile,

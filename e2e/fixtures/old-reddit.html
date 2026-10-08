@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Offline model of old.reddit.com: promoted posts, sidebar ad, awards, trending subreddits. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>reddit: the front page of the internet</title>
+  </head>
+  <body>
+    <div id="header">
+      <div class="trending-subreddits" id="trending-subreddits">trending subreddits: r/something</div>
+    </div>
+    <div class="side">
+      <div class="ad-container" id="sidebar-ad">advertisement</div>
+      <div class="spacer" id="sidebar-box">about this subreddit</div>
+    </div>
+    <div class="content">
+      <div id="siteTable_organic">Organic promoted listing</div>
+      <div id="siteTable">
+        <div class="thing link" id="post">
+          <a class="title">A regular post</a>
+          <span class="awardings-bar" id="awardings">3 awards</span>
+          <span class="gilded-icon" id="gilded">gold</span>
+          <ul class="flat-list buttons">
+            <li class="first" id="comments-link"><a>42 comments</a></li>
+            <li class="share" id="share-link"><a>share</a></li>
+            <li class="give-gold-button" id="give-award"><a class="give-gold">give award</a></li>
+          </ul>
+        </div>
+        <div class="thing link promoted promotedlink" id="promoted-post">
+          <a class="title">Promoted: buy things</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

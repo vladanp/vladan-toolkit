@@ -5,9 +5,15 @@ from the toolbar popup or the settings page.
 Built with [WXT](https://wxt.dev), React 19, TypeScript 7 and Tailwind CSS v4.
 
 ## Features
-| Feature | What it does | Default |
-|---|---|---|
-| Hide YouTube Shorts | Hides Shorts shelves, Shorts in feeds and search, and the Shorts menu entries and tab on www.youtube.com | On |
+| Site | Feature | What it does | Default |
+|---|---|---|---|
+| YouTube | Hide YouTube Shorts | Hides Shorts shelves, Shorts in feeds and search, and the Shorts menu entries and tab | On |
+| YouTube | Hide watched videos in Subscriptions | Hides videos you've started or finished (red progress bar) from the Subscriptions feed | On |
+| YouTube | Skip sponsors in YouTube videos | Skips sponsor segments, self-promotion, subscribe reminders and intros, with an Undo notice. Segment data from [SponsorBlock](https://sponsor.ajay.app) (CC BY-NC-SA 4.0), looked up privately by hash prefix | On |
+| Reddit | Reddit cleaner | Hides promoted posts and other ads, awards, and "Trending today" in search (new and old Reddit) | On |
+| Reddit | Always use old Reddit | Opens Reddit pages on old.reddit.com (Reddit requires being logged in for old Reddit; links clicked on old Reddit still reach new Reddit) | Off |
+| All websites | Reject cookie banners | Rejects cookie consent pop-ups, or hides them when there is no way to reject (DuckDuckGo's [autoconsent](https://github.com/duckduckgo/autoconsent), MPL-2.0) | On |
+| All websites | Remove tracking from links | Strips `utm_*`, `fbclid`, `gclid` and other tracking parameters from addresses before pages load | On |
 
 ## Quick start
 ```bash
