@@ -9,7 +9,7 @@ pre-commit:
       run: pnpm biome check --write --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
       stage_fixed: true
     - name: typecheck
-      glob: "*.{ts,tsx,mjs}"
+      glob: "*.{ts,tsx}"
       run: pnpm typecheck
 
 # Conventional commits (feat:, fix:, ...) drive automatic versioning + CHANGELOG.
@@ -18,8 +18,13 @@ commit-msg:
     - name: commitlint
       run: pnpm commitlint --edit {1}
 
-# Full gate: nothing reaches GitHub unless typecheck, lint, unit tests, build and e2e are green.
+# Full gate: nothing reaches GitHub unless typecheck, lint, unit tests, build and e2e are green
+# for exactly the commits being pushed.
 pre-push:
+  piped: true
   jobs:
+    - name: clean-tree
+      run: node scripts/check-push.ts
+      use_stdin: true
     - name: verify
       run: pnpm verify

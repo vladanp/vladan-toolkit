@@ -3,7 +3,7 @@ import { type BrowserContext, test as base, chromium } from '@playwright/test';
 
 const extensionPath = path.resolve(import.meta.dirname, '../.output/chrome-mv3');
 
-/** Launches Chromium with the built extension loaded (run `pnpm build` first). */
+/** Launches Chromium with the built extension loaded (built by e2e/global-setup.ts). */
 export const test = base.extend<{ context: BrowserContext; extensionId: string }>({
   // biome-ignore lint/correctness/noEmptyPattern: Playwright fixture signature requires destructuring.
   context: async ({}, use) => {

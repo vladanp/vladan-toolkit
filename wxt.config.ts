@@ -1,5 +1,12 @@
+import { mkdirSync } from 'node:fs';
+import { resolve } from 'node:path';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'wxt';
+
+// Persistent dev profile so logins survive `pnpm dev` restarts. Git-ignored via `.wxt/`.
+// web-ext needs an absolute path that already exists, or it falls back to a throwaway temp profile.
+const chromiumProfile = resolve('.wxt/chrome-data');
+mkdirSync(chromiumProfile, { recursive: true });
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -16,7 +23,7 @@ export default defineConfig({
     permissions: [],
   },
   webExt: {
-    // Persistent dev profile so logins survive `pnpm dev` restarts. Git-ignored via `.wxt/`.
-    chromiumArgs: ['--user-data-dir=./.wxt/chrome-data'],
+    chromiumProfile,
+    keepProfileChanges: true,
   },
 });

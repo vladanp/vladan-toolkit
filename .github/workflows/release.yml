@@ -1,10 +1,16 @@
 name: Release
 
 # On every push to main, release-please keeps a "Release PR" up to date (version bump + CHANGELOG).
-# Merging that PR creates a GitHub Release, attaches the zip, and publishes to the Chrome Web Store.
+# Merging that PR creates a GitHub Release, runs full CI, then attaches the tested zip and
+# publishes it to the Chrome Web Store.
 on:
   push:
     branches: [main]
+
+# One release run at a time, so overlapping pushes can't race release-please or double-publish.
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -23,9 +29,13 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  publish:
+  verify:
     needs: release-please
     if: needs.release-please.outputs.release_created == 'true'
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: [release-please, verify]
     runs-on: ubuntu-latest
     env:
       CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
@@ -39,12 +49,16 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version-file: .node-version
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm zip
+      - name: Download the zip CI just tested
+        uses: actions/download-artifact@v4
+        with:
+          name: vladan-toolkit-chrome
+          path: .output
 
       - name: Attach zip to GitHub Release
         env:

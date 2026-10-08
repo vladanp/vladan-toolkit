@@ -4,10 +4,12 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_call: # reused by release.yml so nothing is published without passing CI
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  # Only cancel superseded PR runs; every commit on main keeps its own result.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
   contents: read
@@ -22,11 +24,10 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 24
+          node-version-file: .node-version
           cache: pnpm
 
-      - name: Install (also downloads Playwright Chromium via postinstall)
-        run: pnpm install --frozen-lockfile
+      - run: pnpm install --frozen-lockfile
 
       - name: Install Chromium system dependencies
         run: pnpm exec playwright install-deps chromium
@@ -37,11 +38,8 @@ jobs:
       - name: Unit tests
         run: pnpm test
 
-      - name: E2E tests (real Chromium with the extension loaded)
+      - name: E2E tests (builds + zips, then loads that build into real Chromium)
         run: pnpm e2e
-
-      - name: Zip extension
-        run: pnpm zip
 
       - uses: actions/upload-artifact@v4
         with:
