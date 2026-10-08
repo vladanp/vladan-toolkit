@@ -100,6 +100,8 @@ public/icon/          # extension icons
 - Every push to `main` updates a **Release PR** (release-please). Merge it to release: it tags `vX.Y.Z`
   (first release: `v0.2.0`), writes `CHANGELOG.md` and creates the GitHub Release; then full CI runs on that tag,
   and only if green is the tested zip attached to the release and published to the Chrome Web Store.
+- Web Store publishing is **opt-in**: only when the repo variable `CWS_PUBLISH` is `true`
+  (`gh variable set CWS_PUBLISH --body true`). Currently off: the user installs locally (unpacked).
 - Web Store credentials: secret `CHROME_SUBMIT_ENV` (the whole `.env.submit` from `pnpm wxt submit init`,
   CWS API v2 service account) in the GitHub **environment** `chrome-web-store`, usable only from `main`.
 - Failed publish or credential check: Actions → **Release** → Run workflow (tag to re-publish; "dry run" = check only).

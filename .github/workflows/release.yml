@@ -108,7 +108,10 @@ jobs:
           TAG: ${{ needs.target.outputs.ref }}
         run: gh release upload "$TAG" .output/*-chrome.zip --clobber --repo "$GITHUB_REPOSITORY"
 
+      # Opt-in: set the repo variable CWS_PUBLISH=true once the store listing is complete.
+      # Dry runs always run, so credentials can be checked before that.
       - name: Publish to Chrome Web Store
+        if: vars.CWS_PUBLISH == 'true' || needs.target.outputs.dry_run == 'true'
         env:
           # Only this step sees the key: the whole `.env.submit` from `pnpm wxt submit init` (API v2).
           CHROME_SUBMIT_ENV: ${{ secrets.CHROME_SUBMIT_ENV }}

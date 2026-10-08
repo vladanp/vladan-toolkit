@@ -50,5 +50,7 @@ Publishing is automatic once this is set up. Until then the publish step is skip
    - PowerShell: `cmd /c "gh secret set CHROME_SUBMIT_ENV --env chrome-web-store < .env.submit"`
 7. Delete `.env.submit`, any `.env.submit.backup-*` files, and the JSON key.
 8. Check it: Actions → **Release** → Run workflow with "dry run" ticked.
+9. Turn publishing on: `gh variable set CWS_PUBLISH --body true`. Until then, releases only create the
+   GitHub Release with the zip.
 
 The old client-ID/refresh-token API (v1.1) stops working on October 15th, 2026, so don't use it.
