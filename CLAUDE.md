@@ -81,7 +81,10 @@ public/icon/          # extension icons
      serve an offline model of the site with `context.route(...)` (see `e2e/hide-youtube-shorts.spec.ts`);
      include look-alike elements that must NOT be affected.
    - For site features, also check once against the live site before shipping (sites change markup).
-7. **Verify**: `pnpm verify`, then commit with `feat: <what it does>` (drives the version bump + changelog).
+7. **Store listing**: add the feature to `store/LISTING.md` (description; permission justifications if
+   permissions/sites changed), `PRIVACY.md` (if it touches new sites or data) and README's feature table.
+   Run `pnpm store-assets` if the popup changed. The user pastes listing changes into the dashboard.
+8. **Verify**: `pnpm verify`, then commit with `feat: <what it does>` (drives the version bump + changelog).
 
 ## Rules
 - MV3 only; no remotely hosted code, no `eval`/`new Function` (Chrome Web Store policy).

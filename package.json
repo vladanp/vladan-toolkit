@@ -22,6 +22,7 @@
     "verify": "pnpm check && pnpm test && pnpm e2e",
     "submit": "wxt submit",
     "icons": "node scripts/generate-icons.ts",
+    "store-assets": "node scripts/generate-store-assets.ts",
     "postinstall": "wxt prepare"
   },
   "dependencies": {

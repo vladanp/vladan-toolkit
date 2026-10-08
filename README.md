@@ -36,7 +36,8 @@ Publishing is automatic once this is set up. Until then the publish step is skip
    `devconsole/<publisher-id>/<extension-id>/...`.
 3. Complete the item in the dashboard, or API publishing fails: **Store listing** (description, category,
    screenshots), **Privacy** (single purpose, permission justifications, data usage), and **Distribution**
-   (visibility: Public, Unlisted or Private).
+   (visibility: Public, Unlisted or Private). All texts and images are ready in [store/](store/LISTING.md);
+   privacy policy: [PRIVACY.md](PRIVACY.md).
 4. Create a service account for the Chrome Web Store API (v2) following
    [Google's guide](https://developer.chrome.com/docs/webstore/service-accounts); under
    "Obtain access tokens" use "Use a JSON Web Token" and stop after downloading the JSON key.

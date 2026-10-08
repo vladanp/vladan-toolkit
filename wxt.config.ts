@@ -18,7 +18,9 @@ export default defineConfig({
   }),
   manifest: {
     name: 'Vladan Toolkit',
-    description: 'A personal Chrome toolkit that grows one feature at a time.',
+    // Shown as the Web Store summary (max 132 chars).
+    description:
+      'Hide distractions on the sites you use, starting with YouTube Shorts. Switch each tweak on or off.',
     // Only what features need (see CLAUDE.md). `storage`: per-feature on/off settings.
     permissions: ['storage'],
   },
