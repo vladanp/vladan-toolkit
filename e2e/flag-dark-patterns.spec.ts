@@ -28,6 +28,21 @@ test('flags stock warnings and sales countdowns, and nothing else', async ({ pag
   await expect(page.locator('#low-stock')).toHaveAttribute('title', /common way to rush you/);
 });
 
+test('leaves pages that sell nothing alone', async ({ context, page }) => {
+  // A forum thread: the same words in a comment, and a quiz timer ticking down.
+  await context.route('https://forum.example.com/**', (route) =>
+    route.fulfill({
+      contentType: 'text/html',
+      body: `<h1>Collectors forum</h1><p id="comment">Only 2 left in my collection, selling fast to friends!</p>
+        <div id="quiz">Time left: <span>00:00:30</span></div><button>Reply</button>
+        <script>let t = 30; setInterval(() => { document.querySelector('#quiz span').textContent = '00:00:' + String(--t).padStart(2, '0'); }, 300);</script>`,
+    }),
+  );
+  await page.goto('https://forum.example.com/thread');
+  await page.waitForTimeout(1500);
+  await expect(page.locator(`[${attribute}]`)).toHaveCount(0);
+});
+
 test('the popup switch removes and restores the marks live', async ({
   context,
   page,

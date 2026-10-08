@@ -38,8 +38,7 @@ iframe[title="chat widget"],
 /* Olark */
 #olark-wrapper,
 #olark,
-/* Facebook / Messenger customer chat */
-.fb_dialog,
+/* Facebook / Messenger customer chat (not `.fb_dialog`: the SDK's login and share dialogs use it too) */
 .fb-customerchat,
 .fb_customer_chat_bubble_animated_no_badge,
 /* Gorgias */

@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test';
 import { expect, servePage, setFeature, test } from './fixtures';
 
 const name = 'Hide newsletter and sign-up pop-ups';
-const popups = ['#nl-popup', '#nl-backdrop', '#offer'];
+const popups = ['#nl-popup', '#nl-backdrop', '#offer', '#flyout'];
 const bodyOverflow = (page: Page) => page.evaluate(() => getComputedStyle(document.body).overflowY);
 
 test.beforeEach(async ({ context, page }) => {
@@ -17,10 +17,14 @@ test('hides sign-up pop-ups and their backdrop, and unlocks scrolling', async ({
   for (const selector of popups) await expect(page.locator(selector), selector).toBeHidden();
   expect(await bodyOverflow(page)).not.toBe('hidden');
   // Email fields and dialogs that aren't sign-up pop-ups stay.
-  for (const selector of ['#footer-newsletter', '#signin', '#location']) {
+  for (const selector of ['#footer-newsletter', '#signin', '#location', '#site-header']) {
     await expect(page.locator(selector), selector).toBeVisible();
   }
-  await expect(page.locator('#cart-drawer')).not.toHaveAttribute('data-vladan-toolkit-hidden');
+  for (const selector of ['#cart-drawer', '#page-background']) {
+    await expect(page.locator(selector), selector).not.toHaveAttribute(
+      'data-vladan-toolkit-hidden',
+    );
+  }
 });
 
 test('keeps forms the user opens', async ({ page }) => {

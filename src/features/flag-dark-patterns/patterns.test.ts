@@ -46,6 +46,9 @@ describe('countdown helpers', () => {
   it('needs a sales context', () => {
     expect(urgencyWords.test('Sale ends in')).toBe(true);
     expect(urgencyWords.test('Your cart is reserved for')).toBe(true);
+    expect(urgencyWords.test('Extra 20% off for the next')).toBe(true);
     expect(urgencyWords.test('Half time')).toBe(false);
+    expect(urgencyWords.test('Time left')).toBe(false);
+    expect(urgencyWords.test('Kick-off in')).toBe(false);
   });
 });

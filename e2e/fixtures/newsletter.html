@@ -50,6 +50,18 @@
       </div>
     </div>
 
+    <!-- A flyout that slides in from off-screen (its class change happens while it's still outside). -->
+    <div id="flyout" style="position: fixed; bottom: 20px; right: -420px; width: 360px; height: 220px; background: #fff; z-index: 13; transition: right 0.6s">
+      Join our newsletter <input type="email" placeholder="Email" />
+    </div>
+
+    <!-- Must stay: the site's fixed header with a subscribe box, and a decorative page background. -->
+    <div id="site-header" style="position: fixed; top: 0; left: 0; right: 0; height: 40px; background: #eee; z-index: 5">
+      <nav><a href="/">Home</a> <a href="/shop">Shop</a></nav>
+      <input type="email" placeholder="Subscribe to our newsletter" />
+    </div>
+    <div id="page-background" style="position: fixed; inset: 0; z-index: -1; background: linear-gradient(#fff, #eef)"></div>
+
     <!-- Must stay: a location chooser, and an off-canvas cart drawer mentioning sign-up. -->
     <div class="modal" id="location" role="dialog" style="top: 45%; height: 120px">
       You seem to be in Serbia. Change your location? <button type="button">Change</button>
@@ -63,6 +75,7 @@
         document.getElementById('nl-backdrop').classList.remove('hidden');
         document.getElementById('nl-popup').classList.remove('hidden');
         document.getElementById('offer').classList.remove('hidden');
+        document.getElementById('flyout').style.right = '20px';
         document.body.classList.add('locked');
         document.body.dataset.popupShown = 'yes';
       }, 400);

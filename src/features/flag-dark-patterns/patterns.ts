@@ -19,9 +19,20 @@ export const scarcityPatterns = [
 export const scarcityCue =
   /left|stock|gone|sold|fast|demand|viewing|looking|watching|carts?\b|baskets?\b|bags?\b|bought|purchased|booked/i;
 
-/** Words that make a ticking timer a sales countdown (not a video or game clock). */
+/**
+ * Words that make a ticking timer a sales countdown (not a quiz, video or game clock: so no plain
+ * "left" or "off", as in "Time left" or "Kick-off in").
+ */
 export const urgencyWords =
-  /\b(?:ends?|ending|left|hurry|offer|sale|deals?|expires?|expiring|limited|discount|off|save|order\s+within|last\s+chance|flash|reserved|checkout|don['’]?t\s+miss)\b/i;
+  /\b(?:ends?|ending|hurry|offers?|sale|deals?|expires?|expiring|limited|discount|save|order\s+within|last\s+chance|flash|reserved|checkout|don['’]?t\s+miss)\b|\d{1,2}\s?%\s*off\b/i;
+
+/** Buttons and links that only shops and booking sites have. */
+export const buyAction =
+  /\b(?:add\s+to\s+(?:cart|bag|basket|trolley)|buy\s+(?:it\s+)?now|book\s+now|reserve|see\s+availability|check\s+availability|checkout|pre-?order)\b/i;
+
+/** schema.org types (in JSON-LD) of pages selling something. */
+export const productSchema =
+  /"@type"\s*:\s*"(?:Product|ProductGroup|Offer|AggregateOffer|Hotel|LodgingBusiness)"/;
 
 export const normalize = (text: string) => text.replace(/\s+/g, ' ').trim();
 

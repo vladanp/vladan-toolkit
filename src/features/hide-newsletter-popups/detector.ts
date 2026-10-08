@@ -16,6 +16,8 @@ const textInputs =
   'input:not([type]), input[type="text" i], input[type="email" i], input[type="tel" i], input[type="number" i], textarea';
 // Pop-ups sometimes announce themselves as dialogs; cheap to check on every scan.
 const dialogs = '[role="dialog"], [role="alertdialog"], [aria-modal="true"], dialog[open]';
+// Parts of a site's own layout, never of a pop-up (e.g. a fixed header with a subscribe box).
+const siteLayout = 'main, article, nav, [role="main"], [role="navigation"]';
 
 /** Sign-up and discount offers (a pop-up with an email field needs no such words). */
 export const signupOffer =
@@ -23,7 +25,10 @@ export const signupOffer =
 
 // A pop-up appearing this soon after a click (or Enter/Space) was opened by the user: leave it.
 const userOpenedWithinMs = 1500;
+// Changed elements looked at per scan; the rest wait for the next one.
 const maxTargetsPerScan = 200;
+// Pop-ups that slide or fade in are looked at again once their animation is done.
+const recheckAfterMs = 800;
 
 /**
  * Hides sign-up pop-ups: fixed overlays the user didn't open that ask for an email address or offer a
@@ -35,6 +40,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   const removeStyle = injectStyle(css, owner, doc);
   const hidden = new Set<Element>();
   const userOpened = new WeakSet<Element>();
+  const notPopups = new WeakSet<Element>(); // Too big, or site layout: never a pop-up.
   let lastInteraction = Number.NEGATIVE_INFINITY;
   const onPointer = () => {
     lastInteraction = win.performance.now();
@@ -54,20 +60,31 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   };
 
   /** The outermost fixed-position element around `el` (or `el` itself): the whole pop-up. */
-  const overlayOf = (el: Element) => {
+  const overlayOf = (el: Element, positions: Map<Element, string>) => {
     let overlay: Element | undefined;
     for (let node: Element | null = el; node && node !== doc.body; node = node.parentElement) {
       if (node === doc.documentElement) return undefined;
-      if (style(node).position === 'fixed') overlay = node;
+      let position = positions.get(node);
+      if (position === undefined) {
+        position = style(node).position;
+        positions.set(node, position);
+      }
+      if (position === 'fixed') overlay = node;
     }
     return overlay;
   };
 
-  const isSmallForm = (overlay: Element) =>
-    !overlay.querySelector('input[type="password" i]') && // Sign-in, not sign-up.
-    overlay.querySelectorAll(textInputs).length <= 4 && // Not a checkout or contact form.
-    overlay.querySelectorAll('*').length <= 300 && // Not a whole app laid out with position: fixed.
-    !overlay.querySelector('main, article, [role="main"]');
+  const isSmallForm = (overlay: Element) => {
+    if (notPopups.has(overlay)) return false;
+    if (overlay.querySelectorAll('*').length > 300 || overlay.querySelector(siteLayout)) {
+      notPopups.add(overlay); // A whole app or the site's header: don't measure it again.
+      return false;
+    }
+    return (
+      !overlay.querySelector('input[type="password" i]') && // Sign-in, not sign-up.
+      overlay.querySelectorAll(textInputs).length <= 4 // Not a checkout or contact form.
+    );
+  };
 
   const asksForEmail = (overlay: Element) =>
     [...overlay.querySelectorAll(emailInputs)].some((input) => visible(input));
@@ -78,9 +95,11 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
     return rect.width >= 250 && rect.height >= 150 && text.length <= 600 && signupOffer.test(text);
   };
 
-  // Full-screen, nearly empty fixed layers: the dimmed background behind a pop-up.
+  // Full-screen, nearly empty fixed layers stacked above the page: the dimmed background behind a
+  // pop-up (not a decorative page background, which sits at z-index 0 or below).
   const isBackdrop = (el: Element) => {
-    if (style(el).position !== 'fixed' || !visible(el)) return false;
+    const { position, zIndex } = style(el);
+    if (position !== 'fixed' || !(Number.parseInt(zIndex, 10) > 0) || !visible(el)) return false;
     const rect = el.getBoundingClientRect();
     return (
       rect.width >= win.innerWidth * 0.9 &&
@@ -98,49 +117,73 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   const scrollLocked = () =>
     [doc.documentElement, doc.body].some((el) => style(el).overflowY === 'hidden');
 
+  /** Hides the overlay if it's a sign-up pop-up; returns false if it should be looked at again. */
   const check = (overlay: Element) => {
-    if (hidden.has(overlay) || userOpened.has(overlay) || !visible(overlay)) return;
+    if (hidden.has(overlay) || userOpened.has(overlay) || notPopups.has(overlay)) return true;
+    if (!visible(overlay)) return false; // Maybe still sliding or fading in.
     if (win.performance.now() - lastInteraction < userOpenedWithinMs) {
       userOpened.add(overlay);
-      return;
+      return true;
     }
-    if (!isSmallForm(overlay) || !(asksForEmail(overlay) || offersSignup(overlay))) return;
+    if (!isSmallForm(overlay) || !(asksForEmail(overlay) || offersSignup(overlay))) return true;
     hide(overlay);
     const nearby = [...(overlay.parentElement?.children ?? []), ...doc.body.children];
     for (const el of nearby) if (el !== overlay && !hidden.has(el) && isBackdrop(el)) hide(el);
     if (scrollLocked()) doc.documentElement.setAttribute(unlockAttribute, owner);
+    return true;
   };
 
   const changed = new Set<Element>();
+  let recheck = new Set<Element>();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  let recheckTimer: ReturnType<typeof setTimeout> | undefined;
+
   const scan = () => {
     if (!doc.body) return;
+    const batch: Element[] = [];
+    for (const el of changed) {
+      if (batch.length >= maxTargetsPerScan) break;
+      batch.push(el);
+      changed.delete(el);
+    }
+    if (changed.size > 0) schedule(); // The rest next time.
     const candidates = new Set<Element>([
       ...doc.querySelectorAll(emailInputs),
       ...doc.querySelectorAll(dialogs),
       ...doc.body.children,
-      ...[...changed].slice(0, maxTargetsPerScan),
+      ...batch,
     ]);
-    changed.clear();
+    const positions = new Map<Element, string>(); // Ancestors are shared: look each up once.
     const overlays = new Set<Element>();
     for (const el of candidates) {
       if (el.closest(`[${hiddenAttribute}]`)) continue;
-      const overlay = overlayOf(el);
+      const overlay = overlayOf(el, positions);
       if (overlay) overlays.add(overlay);
     }
-    for (const overlay of overlays) check(overlay);
+    const unsettled = [...overlays].filter((overlay) => overlay.isConnected && !check(overlay));
+    if (unsettled.length === 0) return;
+    for (const overlay of unsettled) recheck.add(overlay);
+    recheckTimer ??= setTimeout(() => {
+      recheckTimer = undefined;
+      const again = recheck;
+      recheck = new Set();
+      for (const overlay of again) if (overlay.isConnected) check(overlay);
+    }, recheckAfterMs);
   };
 
   // Pop-ups are added later or shown by changing a class/style: re-check (throttled) on changes.
-  let timer: ReturnType<typeof setTimeout> | undefined;
+  const schedule = () => {
+    timer ??= setTimeout(() => {
+      timer = undefined;
+      scan();
+    }, 250);
+  };
   const observer = new MutationObserver((records) => {
     for (const record of records) {
       if (record.type === 'attributes') changed.add(record.target as Element);
       for (const node of record.addedNodes) if (node instanceof Element) changed.add(node);
     }
-    timer ??= setTimeout(() => {
-      timer = undefined;
-      scan();
-    }, 250);
+    schedule();
   });
   observer.observe(doc.documentElement, {
     subtree: true,
@@ -155,6 +198,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   return () => {
     observer.disconnect();
     clearTimeout(timer);
+    clearTimeout(recheckTimer);
     win.removeEventListener('pointerdown', onPointer, true);
     win.removeEventListener('keydown', onKey, true);
     for (const el of hidden) el.removeAttribute(hiddenAttribute);
