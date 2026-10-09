@@ -19,7 +19,7 @@ const extensionUrl = (page: string) => `chrome-extension://${new URL(worker.url(
 
 // The popup at 2x, to embed in the marketing screenshot.
 const popupPage = await context.newPage();
-await popupPage.setViewportSize({ width: 320, height: 600 });
+await popupPage.setViewportSize({ width: 352, height: 600 });
 await popupPage.goto(extensionUrl('popup.html'));
 // The version label would go stale with every release.
 await popupPage.addStyleTag({ content: '[data-testid="version"]{visibility:hidden}' });
