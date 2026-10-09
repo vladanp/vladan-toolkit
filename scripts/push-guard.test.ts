@@ -8,7 +8,7 @@ const line = (localRef: string, sha: string) => `${localRef} ${sha} refs/heads/m
 const clean: PushState = { stdin: line('refs/heads/main', head), head, status: '', rootFiles: [] };
 
 describe('decidePush', () => {
-  it('verifies a clean push of the checked-out branch', () => {
+  it('verifies a clean push of the checked out branch', () => {
     expect(decidePush(clean)).toEqual({ errors: [], verify: true });
   });
 
@@ -41,7 +41,7 @@ describe('decidePush', () => {
     expect(errors[0]).toContain('.env, .env.production.local would be baked');
   });
 
-  it('skips verify for tag-only pushes and deletions', () => {
+  it('skips verify for tag only pushes and deletions', () => {
     expect(
       decidePush({ ...clean, stdin: line('refs/tags/v1.0.0', other), status: '?? x' }),
     ).toEqual({

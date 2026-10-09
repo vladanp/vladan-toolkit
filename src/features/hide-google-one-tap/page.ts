@@ -8,8 +8,8 @@ interface IdentityRequest {
 const google = /^https:\/\/accounts\.google\.com\//;
 
 /**
- * Makes the browser-native (FedCM) "Sign in with Google" one-tap prompt fail as if dismissed, while
- * the feature is on. Requests from a clicked sign-in button (mode "active"/"button") go through.
+ * Makes the browser's native (FedCM) "Sign in with Google" One Tap prompt fail as if dismissed, while
+ * the feature is on. Requests from a clicked sign in button (mode "active"/"button") go through.
  */
 export function blockOneTap(win: Window, isOn: () => Promise<boolean>) {
   const credentials = win.navigator.credentials;
@@ -25,7 +25,7 @@ export function blockOneTap(win: Window, isOn: () => Promise<boolean>) {
         (p) => typeof p.configURL === 'string' && google.test(p.configURL),
       );
     if (oneTap && (await isOn())) {
-      throw new DOMException('Sign-in prompt blocked by Vladan Toolkit', 'NotAllowedError');
+      throw new DOMException('Sign in prompt blocked by Vladan Toolkit', 'NotAllowedError');
     }
     return original(options);
   };

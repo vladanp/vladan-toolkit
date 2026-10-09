@@ -13,10 +13,10 @@ const rules = compactRules as unknown as IndexedCMPRuleset;
 export const autoconsentConfig: Partial<Config> = {
   enabled: true,
   autoAction: 'optOut', // Reject.
-  enablePrehide: true, // Hide known pop-ups right away, so they don't flash.
-  enableCosmeticRules: true, // Hide pop-ups that can't be rejected.
+  enablePrehide: true, // Hide known popups right away, so they don't flash.
+  enableCosmeticRules: true, // Hide popups that can't be rejected.
   enableGeneratedRules: true,
-  heuristicMode: 'reject', // Also click "Reject" on unknown cookie pop-ups.
+  heuristicMode: 'reject', // Also click "Reject" on unknown cookie popups.
   logs: {
     lifecycle: false,
     rulesteps: false,

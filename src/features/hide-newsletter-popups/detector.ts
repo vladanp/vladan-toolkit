@@ -14,25 +14,25 @@ const emailInputs =
   'input[type="email" i], input[autocomplete="email" i], input[name*="email" i], input[id*="email" i], input[placeholder*="mail" i]';
 const textInputs =
   'input:not([type]), input[type="text" i], input[type="email" i], input[type="tel" i], input[type="number" i], textarea';
-// Pop-ups sometimes announce themselves as dialogs; cheap to check on every scan.
+// Popups sometimes announce themselves as dialogs; cheap to check on every scan.
 const dialogs = '[role="dialog"], [role="alertdialog"], [aria-modal="true"], dialog[open]';
-// Parts of a site's own layout, never of a pop-up (e.g. a fixed header with a subscribe box).
+// Parts of a site's own layout, never of a popup (e.g. a fixed header with a subscribe box).
 const siteLayout = 'main, article, nav, [role="main"], [role="navigation"]';
 
-/** Sign-up and discount offers (a pop-up with an email field needs no such words). */
+/** Signup and discount offers (a popup with an email field needs no such words). */
 export const signupOffer =
   /\b\d{1,2}\s?%\s*(?:off|discount)\b|\bsave\s+(?:up\s+to\s+)?\d{1,2}\s?%|\bdiscount\b|\bnewsletter\b|\bsubscribe\b|\bfirst\s+(?:order|purchase)\b|\bexclusive\s+(?:offers?|deals?|access|discounts?)\b|\bjoin\s+(?:our|the)\s+(?:list|club|community|newsletter|mailing\s+list|vip)\b|\bmailing\s+list\b|\bsign\s+up\s+(?:for|to\s+(?:get|receive|save))\b/i;
 
-// A pop-up appearing this soon after a click (or Enter/Space) was opened by the user: leave it.
+// A popup appearing this soon after a click (or Enter/Space) was opened by the user: leave it.
 const userOpenedWithinMs = 1500;
 // Changed elements looked at per scan; the rest wait for the next one.
 const maxTargetsPerScan = 200;
-// Pop-ups that slide or fade in are looked at again once their animation is done.
+// Popups that slide or fade in are looked at again once their animation is done.
 const recheckAfterMs = 800;
 
 /**
- * Hides sign-up pop-ups: fixed overlays the user didn't open that ask for an email address or offer a
- * discount for signing up, and aren't a sign-in or big form. Their dimmed backdrops go too, and
+ * Hides signup popups: fixed overlays the user didn't open that ask for an email address or offer a
+ * discount for signing up, and aren't a sign in or big form. Their dimmed backdrops go too, and
  * scrolling is unlocked. Returns a function that undoes everything.
  */
 export function startHidingNewsletterPopups(win: Window = window): () => void {
@@ -40,7 +40,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   const removeStyle = injectStyle(css, owner, doc);
   const hidden = new Set<Element>();
   const userOpened = new WeakSet<Element>();
-  const notPopups = new WeakSet<Element>(); // Too big, or site layout: never a pop-up.
+  const notPopups = new WeakSet<Element>(); // Too big, or site layout: never a popup.
   let lastInteraction = Number.NEGATIVE_INFINITY;
   const onPointer = () => {
     lastInteraction = win.performance.now();
@@ -54,12 +54,12 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
     const rect = el.getBoundingClientRect();
     const onScreen =
       rect.right > 0 && rect.bottom > 0 && rect.left < win.innerWidth && rect.top < win.innerHeight;
-    if (rect.width < 2 || rect.height < 2 || !onScreen) return false; // Off-canvas drawers too.
+    if (rect.width < 2 || rect.height < 2 || !onScreen) return false; // Offcanvas drawers too.
     const { visibility, opacity } = style(el);
     return visibility !== 'hidden' && Number(opacity) > 0.05;
   };
 
-  /** The outermost fixed-position element around `el` (or `el` itself): the whole pop-up. */
+  /** The outermost fixed position element around `el` (or `el` itself): the whole popup. */
   const overlayOf = (el: Element, positions: Map<Element, string>) => {
     let overlay: Element | undefined;
     for (let node: Element | null = el; node && node !== doc.body; node = node.parentElement) {
@@ -81,7 +81,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
       return false;
     }
     return (
-      !overlay.querySelector('input[type="password" i]') && // Sign-in, not sign-up.
+      !overlay.querySelector('input[type="password" i]') && // Sign in, not signup.
       overlay.querySelectorAll(textInputs).length <= 4 // Not a checkout or contact form.
     );
   };
@@ -95,8 +95,8 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
     return rect.width >= 250 && rect.height >= 150 && text.length <= 600 && signupOffer.test(text);
   };
 
-  // Full-screen, nearly empty fixed layers stacked above the page: the dimmed background behind a
-  // pop-up (not a decorative page background, which sits at z-index 0 or below).
+  // Full screen, nearly empty fixed layers stacked above the page: the dimmed background behind a
+  // popup (not a decorative page background, which sits at `z-index` 0 or below).
   const isBackdrop = (el: Element) => {
     const { position, zIndex } = style(el);
     if (position !== 'fixed' || !(Number.parseInt(zIndex, 10) > 0) || !visible(el)) return false;
@@ -117,7 +117,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
   const scrollLocked = () =>
     [doc.documentElement, doc.body].some((el) => style(el).overflowY === 'hidden');
 
-  /** Hides the overlay if it's a sign-up pop-up; returns false if it should be looked at again. */
+  /** Hides the overlay if it's a signup popup; returns false if it should be looked at again. */
   const check = (overlay: Element) => {
     if (hidden.has(overlay) || userOpened.has(overlay) || notPopups.has(overlay)) return true;
     if (!visible(overlay)) return false; // Maybe still sliding or fading in.
@@ -171,7 +171,7 @@ export function startHidingNewsletterPopups(win: Window = window): () => void {
     }, recheckAfterMs);
   };
 
-  // Pop-ups are added later or shown by changing a class/style: re-check (throttled) on changes.
+  // Popups are added later or shown by changing a class/style: recheck (throttled) on changes.
   const schedule = () => {
     timer ??= setTimeout(() => {
       timer = undefined;

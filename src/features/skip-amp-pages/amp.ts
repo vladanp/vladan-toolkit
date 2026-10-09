@@ -11,7 +11,7 @@ export function originalPage(doc: Document = document): string | undefined {
   const here = withoutHash(doc.URL);
   // A site that sends this browser back to its AMP page (e.g. as a phone) would otherwise loop:
   // after a redirect the referrer is this page, after a script redirect the normal page.
-  // ponytail: a cross-site script redirect back (referrer trimmed to the origin) isn't caught.
+  // ponytail: a cross site script redirect back (referrer trimmed to the origin) isn't caught.
   const from = withoutHash(doc.referrer);
   if ([here, from].includes(withoutHash(canonical)) || from === here) return undefined;
   return canonical;

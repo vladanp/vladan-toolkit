@@ -22,7 +22,7 @@ const countAttribute = 'data-vladan-toolkit-dislikes';
 export function startShowingDislikes(doc: Document = document): () => void {
   const removeStyle = injectStyle(css, showYoutubeDislikes.id, doc);
   const requested = new Set<string>();
-  const shown = new Map<string, string>(); // Video id -> formatted count, once it has arrived.
+  const shown = new Map<string, string>(); // Video id → formatted count, once it has arrived.
   let stopped = false;
 
   const lookUp = (videoId: string) => {
@@ -44,7 +44,7 @@ export function startShowingDislikes(doc: Document = document): () => void {
     );
   };
 
-  // YouTube re-renders the buttons and swaps videos without loading a new page: check on every change.
+  // YouTube rerenders the buttons and swaps videos without loading a new page: check on every change.
   const render = () => {
     const videoId = watchPageVideoId(doc.location.href);
     if (videoId) lookUp(videoId);

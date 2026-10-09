@@ -33,13 +33,13 @@ export interface Ruleset {
 
 /**
  * Background: keeps the feature's ruleset enabled exactly while its switch is on (Chrome resets
- * static rulesets to "disabled" on every extension update, so this runs at each service-worker start).
+ * static rulesets to "disabled" on every extension update, so this runs at each service worker start).
  */
 export function syncRuleset(feature: Feature) {
   const setting = featureEnabled(feature);
   let queue = Promise.resolve();
   const sync = () => {
-    // Serialized and re-reading the setting, so a late result can't overwrite a newer one.
+    // Serialized and rereading the setting, so a late result can't overwrite a newer one.
     queue = queue
       .then(async () => {
         const on = await setting.getValue();

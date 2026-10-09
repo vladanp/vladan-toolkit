@@ -8,7 +8,7 @@ export function startCleaning(doc: Document = document): () => void {
   const undo = [injectStyle(pageCss, cleanReddit.id, doc)];
   const styled = new WeakSet<ShadowRoot>();
 
-  // The search box renders (and may be re-created) after load, so check again as the page changes.
+  // The search box renders (and may be recreated) after load, so check again as the page changes.
   const styleSearchBoxes = () => {
     for (const box of doc.querySelectorAll('reddit-search-large')) {
       const root = box.shadowRoot;

@@ -7,7 +7,7 @@ import { featureEnabled } from '@/lib/features';
 import { syncRuleset } from '@/lib/rulesets';
 
 export default defineBackground(() => {
-  // Network-level features: Chrome applies their rules while their switch is on.
+  // Network level features: Chrome applies their rules while their switch is on.
   for (const { id } of rulesets) {
     const feature = features.find((f) => f.id === id);
     if (feature) syncRuleset(feature);

@@ -16,7 +16,7 @@ export interface PushDecision {
   verify: boolean;
 }
 
-/** Git-ignored env files WXT bakes into builds (`.env`, `.env.local`, `.env.production`, ...). */
+/** Gitignored env files WXT bakes into builds (`.env`, `.env.local`, `.env.production`, ...). */
 const isBuildEnvFile = (name: string) =>
   /^\.env(\..+)?$/.test(name) && !/^\.env\.(submit|example)/.test(name);
 

@@ -6,7 +6,7 @@ import type { CookieBannerRequest, CookieBannerResponse } from './protocol';
 type Send = (request: CookieBannerRequest) => Promise<CookieBannerResponse>;
 
 /**
- * Starts autoconsent in this frame: it finds the consent pop-up, rejects it (opt-out) or hides it.
+ * Starts autoconsent in this frame: it finds the consent popup, rejects it (opt out) or hides it.
  * Returns a function that stops it from acting further.
  */
 export function startRejecting(

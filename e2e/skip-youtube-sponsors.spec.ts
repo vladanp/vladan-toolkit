@@ -64,7 +64,7 @@ async function playFrom(page: Page, to: number) {
   }, to);
 }
 
-/** Lets playback run past the sponsor segment (3-8 s). */
+/** Lets playback run past the sponsor segment (3 to 8 s). */
 const playPastSegment = (page: Page) =>
   expect.poll(() => time(page), { timeout: 10_000 }).toBeGreaterThan(8.5);
 

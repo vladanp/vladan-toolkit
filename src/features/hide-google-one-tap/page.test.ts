@@ -10,7 +10,7 @@ function fakeWindow() {
 }
 
 describe('blockOneTap', () => {
-  it('rejects Google one-tap (FedCM) requests while on', async () => {
+  it('rejects Google One Tap (FedCM) requests while on', async () => {
     const { win, get } = fakeWindow();
     blockOneTap(win, async () => true);
     await expect(

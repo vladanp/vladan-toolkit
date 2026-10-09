@@ -1,6 +1,6 @@
 # Git hooks, installed automatically by `pnpm install` (lefthook's postinstall).
 
-# Fast (~1-2s): auto-fix format/lint on staged files only, plus a typecheck.
+# Fast (about 1 to 2 s): autofix format/lint on staged files only, plus a typecheck.
 # The typecheck sees the whole working tree (tsc can't check "staged only"); pre-push is the real gate.
 pre-commit:
   parallel: true
@@ -19,8 +19,8 @@ commit-msg:
     - name: commitlint
       run: pnpm commitlint --edit {1}
 
-# Full gate: refuses dirty trees / non-checked-out branches / local .env files, then runs `pnpm verify`
-# (typecheck, lint, unit tests, build, e2e) on exactly what is pushed. Tag-only pushes skip verify.
+# Full gate: refuses dirty trees / branches that are not checked out / local .env files, then runs `pnpm verify`
+# (typecheck, lint, unit tests, build, e2e) on exactly what is pushed. Tag only pushes skip verify.
 pre-push:
   jobs:
     - name: verify-what-lands

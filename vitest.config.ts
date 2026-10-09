@@ -2,7 +2,7 @@ import { defineConfig } from 'vitest/config';
 import { WxtVitest } from 'wxt/testing/vitest-plugin';
 
 export default defineConfig({
-  // WxtVitest provides WXT auto-imports and an in-memory fake `browser` API.
+  // WxtVitest provides WXT auto imports and an in memory fake `browser` API.
   plugins: [WxtVitest()],
   test: {
     // Node by default; DOM tests opt in with a `// @vitest-environment happy-dom` first line.

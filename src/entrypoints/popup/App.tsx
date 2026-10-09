@@ -16,7 +16,7 @@ export default function App() {
         </span>
       </header>
       {/* Side padding keeps the cards' shadows and focus rings unclipped; `relative` keeps the
-          screen-reader-only descriptions (absolutely positioned) inside the scroll area. */}
+          screen reader only descriptions (absolutely positioned) inside the scroll area. */}
       <div className="relative -mx-3 min-h-0 overflow-y-auto px-3 pb-1 [scrollbar-width:thin]">
         <FeatureToggles compact />
       </div>

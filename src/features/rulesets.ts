@@ -1,4 +1,4 @@
-// Network-level features: one static declarativeNetRequest ruleset each (ruleset id = feature id).
+// Network level features: one static declarativeNetRequest ruleset each (ruleset id = feature id).
 // wxt.config.ts imports this to generate `rules/<id>.json` and the manifest entries, so it may only
 // import the rules modules (relative paths, no runtime `@/` or `#imports`).
 import { trackingParamsRuleset } from './remove-tracking-params/rules';

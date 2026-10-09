@@ -15,13 +15,13 @@ export const scarcityPatterns = [
   /\bbooked\s+\d+\s+times\s+in\s+the\s+(?:last|past)\b/i,
 ];
 
-/** Cheap pre-check before running the patterns on a text. */
+/** Cheap precheck before running the patterns on a text. */
 export const scarcityCue =
   /left|stock|gone|sold|fast|demand|viewing|looking|watching|carts?\b|baskets?\b|bags?\b|bought|purchased|booked/i;
 
 /**
  * Words that make a ticking timer a sales countdown (not a quiz, video or game clock: so no plain
- * "left" or "off", as in "Time left" or "Kick-off in").
+ * "left" or "off", as in "Time left" or "Kickoff in").
  */
 export const urgencyWords =
   /\b(?:ends?|ending|hurry|offers?|sale|deals?|expires?|expiring|limited|discount|save|order\s+within|last\s+chance|flash|reserved|checkout|don['’]?t\s+miss)\b|\d{1,2}\s?%\s*off\b/i;
@@ -39,7 +39,7 @@ export const normalize = (text: string) => text.replace(/\s+/g, ' ').trim();
 export const isScarcityMessage = (text: string) =>
   scarcityPatterns.some((pattern) => pattern.test(text));
 
-/** The numbers in a clock's text, e.g. "02h : 14m : 33s" -> [2, 14, 33]. */
+/** The numbers in a clock's text, e.g. "02h : 14m : 33s" → [2, 14, 33]. */
 export const clockNumbers = (text: string) => (text.match(/\d+/g) ?? []).map(Number);
 
 /** Whether `next` reads as an earlier time than `previous` (same shape, lexicographically smaller). */

@@ -1,4 +1,4 @@
-// Imported by wxt.config.ts at build time: keep imports type-only.
+// Imported by wxt.config.ts at build time: keep imports type only.
 import type { Ruleset } from '@/lib/rulesets';
 
 /** Google's AMP viewer: google.com, .de, .co.uk, .com.au… /amp/s/<page without https://>. */

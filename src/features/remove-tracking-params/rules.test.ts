@@ -24,7 +24,7 @@ describe('tracking parameter rules', () => {
     }
   });
 
-  it('only strips site-specific parameters on those sites', () => {
+  it('only strips site specific parameters on those sites', () => {
     for (const site of siteTrackingParams) {
       for (const param of site.params) {
         expect(trackingParams).not.toContain(param);

@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect, servePage, setFeature, test } from './fixtures';
 
-const name = 'Hide newsletter and sign-up pop-ups';
+const name = 'Hide newsletter and signup popups';
 const popups = ['#nl-popup', '#nl-backdrop', '#offer', '#flyout'];
 const bodyOverflow = (page: Page) => page.evaluate(() => getComputedStyle(document.body).overflowY);
 
@@ -13,10 +13,10 @@ test.beforeEach(async ({ context, page }) => {
   await expect(page.locator('body')).toHaveAttribute('data-popup-shown', 'yes');
 });
 
-test('hides sign-up pop-ups and their backdrop, and unlocks scrolling', async ({ page }) => {
+test('hides signup popups and their backdrop, and unlocks scrolling', async ({ page }) => {
   for (const selector of popups) await expect(page.locator(selector), selector).toBeHidden();
   expect(await bodyOverflow(page)).not.toBe('hidden');
-  // Email fields and dialogs that aren't sign-up pop-ups stay.
+  // Email fields and dialogs that aren't signup popups stay.
   for (const selector of ['#footer-newsletter', '#signin', '#location', '#site-header']) {
     await expect(page.locator(selector), selector).toBeVisible();
   }

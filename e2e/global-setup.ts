@@ -7,7 +7,7 @@ const root = path.resolve(import.meta.dirname, '..');
 
 /**
  * Runs before every e2e session, however it is started (pnpm e2e, VS Code, CLI), so tests never
- * see a stale build: installs Chromium if missing (no-op when present), then builds + zips.
+ * see a stale build: installs Chromium if missing (nothing to do when present), then builds + zips.
  * The zip is the exact build the tests load, so CI ships what it tested.
  */
 export default async function globalSetup() {

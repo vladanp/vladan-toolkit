@@ -1,10 +1,10 @@
-// SponsorBlock (https://sponsor.ajay.app, data CC BY-NC-SA 4.0): crowd-sourced segments of YouTube videos.
+// SponsorBlock (https://sponsor.ajay.app, data CC BY-NC-SA 4.0): crowdsourced segments of YouTube videos.
 const api = 'https://sponsor.ajay.app/api/skipSegments/';
 
 /** SponsorBlock categories that get skipped, with the label shown after skipping. */
 export const skippedCategories = {
   sponsor: 'sponsor',
-  selfpromo: 'self-promotion',
+  selfpromo: 'self promotion',
   interaction: 'subscribe reminder',
   intro: 'intro',
 } as const;
@@ -28,7 +28,7 @@ interface ApiVideo {
   }[];
 }
 
-/** Hex SHA-256 prefix of a video id: the only thing sent to SponsorBlock (k-anonymity). */
+/** Hex SHA-256 prefix of a video id: the only thing sent to SponsorBlock (k anonymity). */
 export async function hashPrefix(videoId: string): Promise<string> {
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(videoId));
   return [...new Uint8Array(hash, 0, 2)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
@@ -61,7 +61,7 @@ export async function fetchSegments(videoId: string, fetchFn = fetch): Promise<S
     .sort((a, b) => a.start - b.start);
 }
 
-// A re-uploaded or edited video has a different length; its old segments would skip the wrong parts.
+// A reuploaded or edited video has a different length; its old segments would skip the wrong parts.
 const durationTolerance = 2;
 // Don't skip in the last moment of a segment (the jump would be pointless).
 const endMargin = 0.2;

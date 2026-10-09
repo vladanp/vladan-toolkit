@@ -2,7 +2,7 @@ import { defaultYoutubeQuality } from '@/features/default-youtube-quality';
 import { qualityAttribute } from '@/features/default-youtube-quality/page';
 import { featureChoice, whileEnabled } from '@/lib/features';
 
-// Tells the page-world script (default-youtube-quality-page) the picked quality while the switch is on.
+// Tells the page world script (default-youtube-quality-page) the picked quality while the switch is on.
 export default defineContentScript({
   matches: ['*://www.youtube.com/*'],
   runAt: 'document_start',

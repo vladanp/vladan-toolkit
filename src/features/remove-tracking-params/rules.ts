@@ -1,8 +1,8 @@
-// Imported by wxt.config.ts at build time: keep imports type-only.
+// Imported by wxt.config.ts at build time: keep imports type only.
 import type { Rule, Ruleset } from '@/lib/rulesets';
 
 /**
- * Query parameters that only identify where a click came from. Exact names (case-sensitive);
+ * Query parameters that only identify where a click came from. Exact names (case sensitive);
  * nothing a site needs to work.
  */
 export const trackingParams = [
@@ -68,7 +68,7 @@ export const trackingParams = [
   'ml_subscriber_hash',
   's_cid',
   '_openstat',
-  // Share-link referrers
+  // Share link referrers
   'ref_src',
   'ref_url',
 ];

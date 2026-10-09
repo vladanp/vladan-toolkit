@@ -31,7 +31,7 @@ test('strips tracking parameters before the page loads', async ({ page }) => {
   await page.waitForURL(`${origin}/next?page=2`);
 });
 
-test('leaves look-alike parameters and paths alone', async ({ page }) => {
+test('leaves lookalike parameters and paths alone', async ({ page }) => {
   for (const path of [
     '/search?q=utm_source&xutm_source=1&utm_sourcex=2',
     '/search?UTM_SOURCE=upper-case-is-not-the-tag',

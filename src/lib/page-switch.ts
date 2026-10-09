@@ -2,7 +2,7 @@ import { type Feature, featureEnabled } from './features';
 import { askEvent, switchDetail, switchEvent } from './main-world';
 
 /**
- * Isolated world: keeps the feature's page-world script (see mainWorldSwitch) informed of its switch,
+ * Isolated world: keeps the feature's page world script (see mainWorldSwitch) informed of its switch,
  * now and on every change. Returns a function that stops.
  */
 export function shareSwitchWithPage(feature: Feature, doc: Document = document): () => void {

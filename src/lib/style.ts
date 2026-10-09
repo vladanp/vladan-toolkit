@@ -1,5 +1,5 @@
 /**
- * Adds a stylesheet to a page (or to an open shadow root, which page-level CSS can't reach), tagged
+ * Adds a stylesheet to a page (or to an open shadow root, which page level CSS can't reach), tagged
  * with the owning feature's id. Returns a function that removes it again.
  *
  * The rules are put in a cascade layer: an `!important` declaration in a layer beats every unlayered

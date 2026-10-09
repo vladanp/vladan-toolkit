@@ -1,11 +1,11 @@
 import { storage } from '#imports';
 
 /** Where a feature works; the settings UI groups its switches by this, in this order. */
-export const featureGroups = ['YouTube', 'Reddit', 'LinkedIn', 'Pop-ups', 'All websites'] as const;
+export const featureGroups = ['YouTube', 'Reddit', 'LinkedIn', 'Popups', 'All websites'] as const;
 export type FeatureGroup = (typeof featureGroups)[number];
 
 export interface Feature {
-  /** Stable kebab-case id; part of the storage key, so never rename it. */
+  /** Stable kebab case id; part of the storage key, so never rename it. */
   id: string;
   /** Short name shown next to the switch. */
   name: string;

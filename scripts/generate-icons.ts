@@ -6,8 +6,8 @@ import { chromium } from '@playwright/test';
 const root = path.resolve(import.meta.dirname, '..');
 const svg = readFileSync(path.join(root, 'src/assets/icon.svg'), 'utf8');
 
-// Canvas size -> artwork size. Chrome Web Store: the 128px icon is 96px artwork + 16px transparent
-// padding; toolbar-sized icons use (nearly) the full canvas to stay legible.
+// Canvas size → artwork size. Chrome Web Store: the 128px icon is 96px artwork + 16px transparent
+// padding; icons at toolbar size use (nearly) the full canvas to stay legible.
 const sizes = { 16: 16, 32: 30, 48: 44, 96: 72, 128: 96 };
 
 const browser = await chromium.launch({ channel: 'chromium' });

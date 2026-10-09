@@ -4,7 +4,7 @@ name: Release
 # creates the tag + GitHub Release; then full CI runs on that tag, and only if it passes is the tested
 # zip attached to the release and published to the Chrome Web Store.
 #
-# Manual run (Actions > Release > Run workflow): re-publish an existing tag (e.g. after a failed
+# Manual run (Actions > Release > Run workflow): republish an existing tag (e.g. after a failed
 # publish), or with "dry run" just check the Web Store credentials.
 on:
   push:
@@ -16,11 +16,11 @@ on:
         required: true
         default: main
       dry_run:
-        description: Dry run - only check Chrome Web Store credentials, upload nothing
+        description: Dry run: only check Chrome Web Store credentials, upload nothing
         type: boolean
         default: true
 
-# One release run at a time, so overlapping pushes can't race release-please or double-publish.
+# One release run at a time, so overlapping pushes can't race release-please or publish twice.
 concurrency:
   group: release
   cancel-in-progress: false
@@ -108,7 +108,7 @@ jobs:
           TAG: ${{ needs.target.outputs.ref }}
         run: gh release upload "$TAG" .output/*-chrome.zip --clobber --repo "$GITHUB_REPOSITORY"
 
-      # Opt-in: set the repo variable CWS_PUBLISH=true once the store listing is complete.
+      # Opt in: set the repo variable CWS_PUBLISH=true once the store listing is complete.
       # Dry runs always run, so credentials can be checked before that.
       - name: Publish to Chrome Web Store
         if: vars.CWS_PUBLISH == 'true' || needs.target.outputs.dry_run == 'true'
@@ -118,7 +118,7 @@ jobs:
           DRY_RUN: ${{ needs.target.outputs.dry_run }}
         run: |
           if [ -z "$CHROME_SUBMIT_ENV" ]; then
-            echo "::notice::CHROME_SUBMIT_ENV not set - skipped Web Store publish. See README > Chrome Web Store."
+            echo "::notice::CHROME_SUBMIT_ENV not set, so the Web Store publish was skipped. See README > Chrome Web Store."
             exit 0
           fi
           printf '%s\n' "$CHROME_SUBMIT_ENV" > .env.submit

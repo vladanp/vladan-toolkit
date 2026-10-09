@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
-  Offline model of a shop that opens a newsletter pop-up on a timer (with a separate dimmed backdrop
-  and scroll lock), plus email fields that must stay: an inline footer form, a sign-in dialog shown on
+  Offline model of a shop that opens a newsletter popup on a timer (with a separate dimmed backdrop
+  and scroll lock), plus email fields that must stay: an inline footer form, a sign in dialog shown on
   load, and a contact form the user opens with a click.
 -->
 <html lang="en">
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <!-- A flyout that slides in from off-screen (its class change happens while it's still outside). -->
+    <!-- A flyout that slides in from offscreen (its class change happens while it's still outside). -->
     <div id="flyout" style="position: fixed; bottom: 20px; right: -420px; width: 360px; height: 220px; background: #fff; z-index: 13; transition: right 0.6s">
       Join our newsletter <input type="email" placeholder="Email" />
     </div>
@@ -62,7 +62,7 @@
     </div>
     <div id="page-background" style="position: fixed; inset: 0; z-index: -1; background: linear-gradient(#fff, #eef)"></div>
 
-    <!-- Must stay: a location chooser, and an off-canvas cart drawer mentioning sign-up. -->
+    <!-- Must stay: a location chooser, and an offcanvas cart drawer mentioning signup. -->
     <div class="modal" id="location" role="dialog" style="top: 45%; height: 120px">
       You seem to be in Serbia. Change your location? <button type="button">Change</button>
     </div>

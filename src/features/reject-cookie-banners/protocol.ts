@@ -6,9 +6,9 @@ import type {
 import { rejectCookieBanners } from '.';
 
 /**
- * Content script -> background request. Autoconsent (DuckDuckGo's consent-popup engine) runs in
+ * Content script to background request. Autoconsent (DuckDuckGo's consent popup engine) runs in
  * every frame and asks the background for two things only: its rules/config, and running one of its
- * built-in snippets in the page's own JavaScript world.
+ * built in snippets in the page's own JavaScript world.
  */
 export interface CookieBannerRequest {
   feature: typeof rejectCookieBanners.id;

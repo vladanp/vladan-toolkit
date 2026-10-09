@@ -44,7 +44,7 @@ export function keepPickedQuality(doc: Document = document) {
     const quality = pickQuality(available, preferred);
     if (quality) player?.setPlaybackQualityRange?.(quality, quality);
   };
-  // Every video (also after in-page navigation) loads into the same <video>. Media events don't bubble.
+  // Every video (also after in page navigation) loads into the same <video>. Media events don't bubble.
   doc.addEventListener(
     'loadedmetadata',
     (event) => {

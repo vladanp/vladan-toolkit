@@ -15,7 +15,7 @@ stats-*.json
 .chrome-dev-profile
 web-ext.config.ts
 
-# Machine-local Claude Code settings
+# Machine local Claude Code settings
 .claude/settings.local.json
 
 # Secrets (this repo is PUBLIC)

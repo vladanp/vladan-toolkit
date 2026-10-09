@@ -4,7 +4,7 @@ import { whileEnabled } from '@/lib/features';
 
 export default defineContentScript({
   matches: ['*://*/*'],
-  allFrames: true, // Many consent pop-ups live in iframes.
+  allFrames: true, // Many consent popups live in iframes.
   runAt: 'document_start',
   async main(ctx) {
     const stop = await whileEnabled(rejectCookieBanners, () => startRejecting());

@@ -1,5 +1,5 @@
 // Scripts in the page's own JavaScript world (`world: 'MAIN'`) can override page APIs, but can't read
-// extension storage. An isolated-world script announces the feature's switch to them with DOM events
+// extension storage. An isolated world script announces the feature's switch to them with DOM events
 // (see shareSwitchWithPage in ./page-switch.ts). This file has no imports: it runs in the page world.
 
 export const askEvent = 'vladan-toolkit:ask';

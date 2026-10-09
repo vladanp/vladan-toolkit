@@ -4,7 +4,7 @@ export const hideChatWidgets = {
   id: 'hide-chat-widgets',
   name: 'Hide chat widgets',
   description:
-    'Hides "Chat with us" bubbles and support chat pop-ups (Intercom, Drift, Zendesk and more).',
-  group: 'Pop-ups',
+    'Hides "Chat with us" bubbles and support chat popups (Intercom, Drift, Zendesk and more).',
+  group: 'Popups',
   enabledByDefault: true,
 } satisfies Feature;

@@ -1,4 +1,4 @@
-/* YouTube's dislike button is icon-only, with a fixed width, until it holds the count. */
+/* YouTube's dislike button is icon only, with a fixed width, until it holds the count. */
 button:has(> [data-vladan-toolkit-dislikes]) {
   /* biome-ignore lint/complexity/noImportantStyles: must win over YouTube's button styles */
   width: auto !important;

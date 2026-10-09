@@ -31,7 +31,7 @@ type Kind = keyof typeof labels;
 const skipped = 'script, style, noscript, textarea, input, select, [contenteditable]';
 // Timers are a few small elements; bigger mutated containers (feeds, grids) aren't worth reading.
 const maxClockChildren = 8;
-// How often a page that didn't look like a shop is checked again (single-page apps navigate).
+// How often a page that didn't look like a shop is checked again (single page apps navigate).
 const shopRecheckMs = 3000;
 
 interface ClockState {

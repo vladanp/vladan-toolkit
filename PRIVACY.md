@@ -1,6 +1,6 @@
-# Privacy policy — Vladan Toolkit
+# Privacy policy: Vladan Toolkit
 
-_Last updated: 2026-10-09_
+_Last updated: October 9, 2026_
 
 Vladan Toolkit does **not collect or sell any personal or browsing data**, and has no servers of its own.
 Everything runs inside your browser, except the two lookups described under "Outside services"; one of them
@@ -15,9 +15,9 @@ Everything runs inside your browser, except the two lookups described under "Out
     picked.
   - **Reddit** (www.reddit.com, old.reddit.com): a stylesheet that hides ads, awards and trending searches.
   - **LinkedIn** (www.linkedin.com): a script that hides promoted and suggested posts in the feed.
-  - **All websites:** cookie consent pop-ups are rejected or hidden (using DuckDuckGo's open-source
-    autoconsent rules, bundled in the extension); newsletter/sign-up pop-ups, chat widgets, sites' own
-    notification pop-ups, Google's one-tap sign-in prompt and (if you turn it on) sticky bars are hidden;
+  - **All websites:** cookie consent popups are rejected or hidden (using DuckDuckGo's open source
+    autoconsent rules, bundled in the extension); newsletter/signup popups, chat widgets, sites' own
+    notification popups, Google's One Tap sign in prompt and (if you turn it on) sticky bars are hidden;
     notification permission requests you didn't make are answered "no"; countdown timers and "only 2 left"
     messages are outlined; AMP pages are swapped for the site's normal page (its address is in the AMP page
     itself). To do this the extension looks at the page inside your browser. Tracking parameters such as
@@ -25,7 +25,7 @@ Everything runs inside your browser, except the two lookups described under "Out
     go to the page itself; Chrome applies those rules itself.
   None of this records or sends page content anywhere.
 - **Outside services** (no cookies or account details are sent to either):
-  - To skip sponsors, the extension asks [SponsorBlock](https://sponsor.ajay.app) (a free, community-run
+  - To skip sponsors, the extension asks [SponsorBlock](https://sponsor.ajay.app) (a free, community
     database) which parts of a video to skip. It sends only the **first 4 characters of a hash of the video's
     id**, which matches many unrelated videos, and picks the right video from the answer locally, so SponsorBlock
     can't tell which video you watch. Switch "Skip sponsors in YouTube videos" off to stop these requests.

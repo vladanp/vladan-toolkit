@@ -7,7 +7,7 @@ export default defineContentScript({
   matches: ['*://www.youtube.com/*'],
   runAt: 'document_start',
   async main(ctx) {
-    // YouTube is a single-page app: the rule itself only matches on the Subscriptions page.
+    // YouTube is a single page app: the rule itself only matches on the Subscriptions page.
     const stop = await whileEnabled(hideWatchedSubscriptions, () =>
       injectStyle(css, hideWatchedSubscriptions.id),
     );

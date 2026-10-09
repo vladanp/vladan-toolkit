@@ -23,7 +23,7 @@ test('flags stock warnings and sales countdowns, and nothing else', async ({ pag
   for (const selector of untouched) {
     await expect(page.locator(selector), selector).not.toHaveAttribute(attribute, /.*/);
   }
-  // Still readable, just de-emphasized, with an explanation on hover.
+  // Still readable, just deemphasized, with an explanation on hover.
   await expect(page.locator('#low-stock')).toBeVisible();
   await expect(page.locator('#low-stock')).toHaveAttribute('title', /common way to rush you/);
 });

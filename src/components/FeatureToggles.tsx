@@ -33,7 +33,7 @@ export function FeatureToggles({ compact = false }: { compact?: boolean }) {
   );
 }
 
-// A sliding switch drawn on the checkbox itself (pseudo-element knob), so it stays a native input.
+// A sliding switch drawn on the checkbox itself (pseudo element knob), so it stays a native input.
 const switchClass =
   'relative h-5 w-9 shrink-0 cursor-pointer appearance-none rounded-full bg-neutral-300 transition-colors duration-200 ' +
   'before:absolute before:top-0.5 before:left-0.5 before:size-4 before:rounded-full before:bg-white before:shadow ' +

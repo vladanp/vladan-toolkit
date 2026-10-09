@@ -13,7 +13,7 @@ const feature: Feature = {
 };
 const settle = () => new Promise((resolve) => setTimeout(resolve, 10));
 
-describe('page-world switch', () => {
+describe('page world switch', () => {
   it('reaches a page script that starts first (it asks, then gets the answer)', async () => {
     const isOn = mainWorldSwitch(feature.id);
     const stop = shareSwitchWithPage(feature);
