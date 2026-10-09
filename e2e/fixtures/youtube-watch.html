@@ -1,5 +1,8 @@
 <!doctype html>
-<!-- Offline model of a YouTube watch page: the main player's <video> (plays a silent WAV). -->
+<!--
+  Offline model of a YouTube watch page: the main player's <video> (plays a silent WAV) with a
+  stand-in for its JavaScript API, and the like/dislike buttons under it.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -10,6 +13,23 @@
       <div id="movie_player" class="html5-video-player" style="position: relative; width: 640px; height: 360px">
         <video class="html5-main-video" muted preload="auto" src="/test-media/silence.wav"></video>
       </div>
+      <script>
+        // YouTube's player API: methods on the #movie_player element, in the page's JS world.
+        window.qualityCalls = [];
+        const player = document.getElementById('movie_player');
+        player.getAvailableQualityLevels = () => ['hd1440', 'hd1080', 'hd720', 'large', 'medium', 'auto'];
+        player.setPlaybackQualityRange = (min, max) => window.qualityCalls.push(`${min}-${max}`);
+      </script>
+      <ytd-watch-metadata>
+        <segmented-like-dislike-button-view-model style="display: flex">
+          <like-button-view-model>
+            <button aria-label="like this video along with 19,479,454 other people"><span>👍</span> 19M</button>
+          </like-button-view-model>
+          <dislike-button-view-model>
+            <button aria-label="Dislike this video" style="width: 40px"><span aria-hidden="true">👎</span></button>
+          </dislike-button-view-model>
+        </segmented-like-dislike-button-view-model>
+      </ytd-watch-metadata>
       <!-- A hover preview elsewhere on the page: never skipped. -->
       <div id="inline-preview-player"><video id="preview" muted src="/test-media/silence.wav"></video></div>
     </ytd-app>

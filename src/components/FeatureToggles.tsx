@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { features } from '@/features/registry';
-import { type Feature, featureEnabled, featureGroups } from '@/lib/features';
+import { type Feature, featureChoice, featureEnabled, featureGroups } from '@/lib/features';
 
 /**
  * One on/off switch per registered feature, in a card per group, kept in sync with storage.
@@ -55,10 +55,10 @@ function FeatureToggle({ feature, compact }: { feature: Feature; compact: boolea
   const checked = enabled ?? feature.enabledByDefault;
   return (
     <li
-      className={`flex items-center justify-between gap-4 ${compact ? 'px-3 py-1' : 'px-4 py-3'}`}
+      className={`flex items-center gap-3 ${compact ? 'px-3 py-1' : 'px-4 py-3'}`}
       title={compact ? feature.description : undefined}
     >
-      <div className="min-w-0">
+      <div className="mr-auto min-w-0">
         <label htmlFor={inputId} className="cursor-pointer text-sm font-medium">
           {feature.name}
         </label>
@@ -69,6 +69,7 @@ function FeatureToggle({ feature, compact }: { feature: Feature; compact: boolea
           {feature.description}
         </p>
       </div>
+      {feature.choice && <FeatureChoice feature={feature} choice={feature.choice} />}
       <input
         id={inputId}
         type="checkbox"
@@ -85,5 +86,40 @@ function FeatureToggle({ feature, compact }: { feature: Feature; compact: boolea
         }}
       />
     </li>
+  );
+}
+
+function FeatureChoice({
+  feature,
+  choice,
+}: {
+  feature: Feature;
+  choice: NonNullable<Feature['choice']>;
+}) {
+  const [value, setValue] = useState<string>();
+
+  useEffect(() => {
+    const setting = featureChoice(feature);
+    setting.getValue().then(setValue);
+    return setting.watch(setValue);
+  }, [feature]);
+
+  return (
+    <select
+      aria-label={choice.label}
+      className="shrink-0 cursor-pointer rounded-lg bg-neutral-100 py-0.5 pr-1 pl-2 text-xs font-medium focus-visible:outline-2 focus-visible:outline-blue-500 disabled:cursor-default dark:bg-neutral-800"
+      value={value ?? choice.default}
+      disabled={value === undefined}
+      onChange={(event) => {
+        setValue(event.target.value);
+        featureChoice(feature).setValue(event.target.value);
+      }}
+    >
+      {Object.entries(choice.options).map(([option, label]) => (
+        <option key={option} value={option}>
+          {label}
+        </option>
+      ))}
+    </select>
   );
 }

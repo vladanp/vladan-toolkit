@@ -10,8 +10,11 @@ Built with [WXT](https://wxt.dev), React 19, TypeScript 7 and Tailwind CSS v4.
 | YouTube | Hide YouTube Shorts | Hides Shorts shelves, Shorts in feeds and search, and the Shorts menu entries and tab | On |
 | YouTube | Hide watched videos in Subscriptions | Hides videos you've started or finished (red progress bar) from the Subscriptions feed | On |
 | YouTube | Skip sponsors in YouTube videos | Skips sponsor segments, self-promotion, subscribe reminders and intros, with an Undo notice. Segment data from [SponsorBlock](https://sponsor.ajay.app) (CC BY-NC-SA 4.0), looked up privately by hash prefix | On |
+| YouTube | Show YouTube dislikes | Shows the dislike count next to the dislike button. Counts are estimates from [Return YouTube Dislike](https://returnyoutubedislike.com) (the video's id is sent to look them up) | On |
+| YouTube | Default video quality | Plays videos in the quality you pick next to the switch (or the best below it) instead of YouTube's automatic choice; 1080p unless you change it | On |
 | Reddit | Reddit cleaner | Hides promoted posts and other ads, awards, and "Trending today" in search (new and old Reddit) | On |
 | Reddit | Always use old Reddit | Opens Reddit pages on old.reddit.com (Reddit requires being logged in for old Reddit; links clicked on old Reddit still reach new Reddit) | Off |
+| LinkedIn | Hide promoted and suggested posts | Hides ads ("Promoted", "Promoted by …") and "Suggested" posts in the feed | On |
 | Pop-ups | Reject cookie banners | Rejects cookie consent pop-ups, or hides them when there is no way to reject (DuckDuckGo's [autoconsent](https://github.com/duckduckgo/autoconsent), MPL-2.0) | On |
 | Pop-ups | Hide newsletter and sign-up pop-ups | Hides overlays that ask for your email or offer a discount for signing up, with their backdrop, and unlocks scrolling. Forms you open yourself stay | On |
 | Pop-ups | Hide chat widgets | Hides "Chat with us" bubbles and support chats (Intercom, Drift, Zendesk, HubSpot, Crisp, Tawk.to, LiveChat, Tidio and more) | On |
@@ -19,6 +22,7 @@ Built with [WXT](https://wxt.dev), React 19, TypeScript 7 and Tailwind CSS v4.
 | Pop-ups | Hide "Sign in with Google" pop-ups | Stops Google's one-tap sign-in prompt (browser and iframe versions); "Sign in with Google" buttons still work | On |
 | Pop-ups | Hide sticky headers and footers | Hides bars stuck to the top or bottom while you're scrolled down a page; they come back at the top | Off |
 | All websites | Remove tracking from links | Strips `utm_*`, `fbclid`, `gclid` and other tracking parameters from addresses before pages load | On |
+| All websites | Open original pages instead of AMP | Takes links to Google's AMP viewer and the AMP cache, and sites' own AMP pages, to the normal page | On |
 | All websites | Dark pattern detector | Outlines and fades countdown timers and "only 2 left!" / "12 people are viewing" messages, so they don't rush you | On |
 
 ## Quick start

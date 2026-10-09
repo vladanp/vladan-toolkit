@@ -1,7 +1,7 @@
 import { storage } from '#imports';
 
 /** Where a feature works; the settings UI groups its switches by this, in this order. */
-export const featureGroups = ['YouTube', 'Reddit', 'Pop-ups', 'All websites'] as const;
+export const featureGroups = ['YouTube', 'Reddit', 'LinkedIn', 'Pop-ups', 'All websites'] as const;
 export type FeatureGroup = (typeof featureGroups)[number];
 
 export interface Feature {
@@ -14,12 +14,21 @@ export interface Feature {
   /** Settings section the switch appears in. */
   group: FeatureGroup;
   enabledByDefault: boolean;
+  /** A value the user picks next to the switch (e.g. a video quality); `options` maps value to label. */
+  choice?: { label: string; options: Readonly<Record<string, string>>; default: string };
 }
 
 /** The on/off switch of a feature, synced across the user's browsers. */
 export function featureEnabled(feature: Feature) {
   return storage.defineItem<boolean>(`sync:features.${feature.id}.enabled`, {
     fallback: feature.enabledByDefault,
+  });
+}
+
+/** The value picked for a feature's `choice`, synced like its switch. */
+export function featureChoice(feature: Feature) {
+  return storage.defineItem<string>(`sync:features.${feature.id}.choice`, {
+    fallback: feature.choice?.default ?? '',
   });
 }
 

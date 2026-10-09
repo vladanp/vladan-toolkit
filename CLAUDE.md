@@ -42,11 +42,12 @@ src/
     rulesets.ts       # network-rule features (declarativeNetRequest), read by wxt.config.ts
     <feature-id>/     # one folder per feature: index.ts = definition only; logic, CSS, tests next to it
   components/         # shared React UI (FeatureToggles)
-  lib/features.ts     # Feature type + groups, featureEnabled(), whileEnabled()
+  lib/features.ts     # Feature type + groups, featureEnabled(), featureChoice(), whileEnabled()
   lib/style.ts        # injectStyle(): switchable <style> for a page or a shadow root (in a cascade layer)
   lib/main-world.ts   # mainWorldSwitch(): a feature's switch inside the page's own JS world
   lib/page-switch.ts  # shareSwitchWithPage(): isolated-world side of that
   lib/rulesets.ts     # Rule/Ruleset types, syncRuleset() (background)
+  lib/youtube.ts      # watchPageVideoId()
   assets/global.css   # Tailwind entry for extension pages
 e2e/                  # Playwright tests; e2e/fixtures/ = offline models of real sites
 scripts/              # repo tooling (pre-push guard)
@@ -65,6 +66,8 @@ public/icon/          # extension icons
    } satisfies Feature;
    ```
    Keep `index.ts` to the definition: the popup imports every one. Heavy logic goes in other files.
+   A setting beyond on/off: add `choice: { label, options: { value: 'Label', … }, default }`; the popup shows a
+   dropdown next to the switch, and `featureChoice(myFeature)` is its storage item (see `default-youtube-quality`).
 2. **Register it** in `src/features/registry.ts`. The popup and settings page then show its switch automatically.
 3. **Gate all behavior on the switch** (it must apply live, without reloading pages):
    - Content script: `src/entrypoints/<feature-id>.content.ts` with
@@ -79,6 +82,9 @@ public/icon/          # extension icons
      `document_start`, that reads the switch with `mainWorldSwitch(feature.id)`, plus an isolated content script
      calling `shareSwitchWithPage(feature)` (see `block-notification-prompts`). Page-world code can't import
      extension APIs or `#imports`, and must keep working when the switch is off (call the original API).
+     Calling page APIs with a setting (e.g. YouTube's player): the isolated script puts the value in a
+     `data-vladan-toolkit-*` attribute on `<html>` while the switch is on, and the page-world script reads and
+     watches it (see `default-youtube-quality`).
    - Background: check `await featureEnabled(myFeature).getValue()` before acting, and use
      `featureEnabled(myFeature).watch(...)` to add/remove listeners, context menus, alarms, etc.
      Content script ↔ background: a request object tagged with the feature id, answered via `sendResponse`

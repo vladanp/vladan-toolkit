@@ -1,0 +1,55 @@
+<!doctype html>
+<!--
+  Offline model of the LinkedIn feed: 2026 markup (hashed classes, role=listitem posts) and the classic
+  markup of post pages. Ads and suggested posts, plus look-alikes that must stay.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Feed | LinkedIn</title>
+  </head>
+  <body>
+    <main>
+      <div role="list" id="feed">
+        <div role="listitem" data-testid="post-normal">
+          <div class="_9f2a1c"><p class="_3be41d">Jane Doe</p><p>Engineer • 1st</p></div>
+          <div data-testid="expandable-text-box"><span>Promoted</span> to VP! Suggested reading below.</div>
+        </div>
+        <div role="listitem" data-testid="post-company-name">
+          <div class="_9f2a1c"><p>Promoted Solutions Inc</p><p>12,345 followers</p></div>
+          <div data-testid="expandable-text-box">We are hiring.</div>
+        </div>
+        <div role="listitem" data-testid="post-promoted">
+          <div class="_9f2a1c"><p>Acme Corp</p><p>Promoted</p></div>
+          <div data-testid="expandable-text-box">Buy our stuff.</div>
+        </div>
+        <div role="listitem" data-testid="post-promoted-by">
+          <div class="_9f2a1c"><p>Jane Doe</p><p>Promoted by <a href="#acme">Acme Corp</a></p></div>
+        </div>
+        <div role="listitem" data-testid="post-sponsored-link">
+          <a aria-label="View Sponsored Content" href="#ad"><img alt="" /></a>
+        </div>
+        <div role="listitem" data-testid="post-suggested">
+          <div class="_4c1e0b"><p>Suggested</p></div>
+          <div class="_9f2a1c"><p>John Roe</p><p>Founder • 3rd+</p></div>
+        </div>
+      </div>
+      <div class="feed-shared-update-v2" data-id="urn:li:activity:1" data-testid="classic-promoted">
+        <span class="update-components-actor__sub-description"><span aria-hidden="true">Promoted</span></span>
+      </div>
+    </main>
+    <script>
+      // The feed keeps loading as you scroll; this post renders its label a moment after it appears.
+      setTimeout(() => {
+        const post = document.createElement('div');
+        post.setAttribute('role', 'listitem');
+        post.dataset.testid = 'post-late';
+        post.innerHTML = '<div><p>Loading…</p></div>';
+        document.getElementById('feed').append(post);
+        setTimeout(() => {
+          post.querySelector('p').textContent = 'Promoted';
+        }, 100);
+      }, 300);
+    </script>
+  </body>
+</html>
