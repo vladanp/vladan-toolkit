@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/vladanp/vladan-toolkit/compare/v0.2.0...v0.3.0) (2026-10-09)
+
+
+### Features
+
+* default YouTube video quality, picked next to its switch ([b9cb250](https://github.com/vladanp/vladan-toolkit/commit/b9cb2501a4e2458972ebc2be455eb97a07fdcc01))
+* hide promoted and suggested posts on LinkedIn ([b9cb250](https://github.com/vladanp/vladan-toolkit/commit/b9cb2501a4e2458972ebc2be455eb97a07fdcc01))
+* modern look for the popup and settings page ([370e349](https://github.com/vladanp/vladan-toolkit/commit/370e3492ef4c314c4bb90bfdbfc45e267ff57af2))
+* open original pages instead of AMP ([b9cb250](https://github.com/vladanp/vladan-toolkit/commit/b9cb2501a4e2458972ebc2be455eb97a07fdcc01))
+* show YouTube dislike counts (Return YouTube Dislike) ([b9cb250](https://github.com/vladanp/vladan-toolkit/commit/b9cb2501a4e2458972ebc2be455eb97a07fdcc01))
+
 ## [0.2.0](https://github.com/vladanp/vladan-toolkit/compare/v0.1.0...v0.2.0) (2026-10-08)
 
 
