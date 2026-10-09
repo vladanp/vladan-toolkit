@@ -38,7 +38,7 @@ All websites
 
 Privacy: the extension collects no data. It stores only your settings, synced with your Chrome profile. No analytics, no tracking, no remote code. Only the dislike counts need the id of the video you open; switch them off and that lookup stops.
 
-Open source: https://github.com/vladanp/vladan-toolkit
+Open source: https://github.com/vladanp/vladan-toolkit-extension
 ```
 
 | Field | Value |
@@ -48,8 +48,8 @@ Open source: https://github.com/vladanp/vladan-toolkit
 | Store icon | comes from the package (128px) |
 | Screenshot | `screenshot-1-toolkit.png` (1280x800) |
 | Small promo tile | `promo-small-440x280.png` |
-| Homepage URL | https://github.com/vladanp/vladan-toolkit |
-| Support URL | https://github.com/vladanp/vladan-toolkit/issues |
+| Homepage URL | https://github.com/vladanp/vladan-toolkit-extension |
+| Support URL | https://github.com/vladanp/vladan-toolkit-extension/issues |
 
 ## Privacy tab
 
@@ -76,7 +76,7 @@ third parties; not used for unrelated purposes; not used for creditworthiness/le
 (The SponsorBlock lookup sends only a 4-character hash prefix of a YouTube video id, which can't identify the
 video or the user. Both lookups are described in the privacy policy.)
 
-**Privacy policy URL:** `https://github.com/vladanp/vladan-toolkit/blob/main/PRIVACY.md`
+**Privacy policy URL:** `https://github.com/vladanp/vladan-toolkit-extension/blob/main/PRIVACY.md`
 
 ## Distribution tab
 

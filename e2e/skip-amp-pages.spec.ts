@@ -1,4 +1,9 @@
+import { readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
+import type { AddressInfo } from 'node:net';
 import { expect, expectRuleset, servePage, setFeature, test } from './fixtures';
+
+const ampPage = readFileSync(new URL('fixtures/amp-page.html', import.meta.url));
 
 test.beforeEach(async ({ context }) => {
   await context.route('https://news.example.com/**', (route) =>
@@ -33,28 +38,30 @@ test('opens the normal page for AMP links and AMP pages', async ({ page, service
   expect(page.url()).toBe('https://news.example.com/other');
 });
 
-test('stays on the AMP page when the site sends the browser back to it', async ({
-  context,
-  page,
-}) => {
+test('stays on the AMP page when the site sends the browser back to it', async ({ page }) => {
+  // A real local server: Playwright doesn't route the request a fulfilled redirect leads to.
   let normalPageVisits = 0;
-  // Like a site redirecting phones to its AMP pages.
-  await context.route('https://loop.example.com/story', (route) => {
-    normalPageVisits++;
-    return route.fulfill({
-      status: 302,
-      headers: { location: 'https://loop.example.com/story/amp' },
-    });
+  const server = createServer((request, response) => {
+    if (request.url === '/story') {
+      normalPageVisits++;
+      // Like a site redirecting phones to its AMP pages.
+      response.writeHead(302, { location: '/story/amp' }).end();
+    } else {
+      response.writeHead(200, { 'content-type': 'text/html' }).end(ampPage);
+    }
   });
-  await context.route('https://loop.example.com/story/amp', (route) =>
-    route.fulfill(servePage('amp-page.html')),
-  );
-
-  await page.goto('https://loop.example.com/story/amp');
-  await expect.poll(() => normalPageVisits).toBe(1);
-  await page.waitForTimeout(1000); // A loop would keep going.
-  expect(normalPageVisits).toBe(1);
-  expect(page.url()).toBe('https://loop.example.com/story/amp');
+  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  const origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  try {
+    await page.goto(`${origin}/story/amp`);
+    await expect.poll(() => normalPageVisits).toBe(1);
+    await page.waitForTimeout(1000); // A loop would keep going.
+    expect(normalPageVisits).toBe(1);
+    expect(page.url()).toBe(`${origin}/story/amp`);
+    await expect(page.getByRole('heading')).toHaveText('Story, AMP version');
+  } finally {
+    server.close();
+  }
 });
 
 test('switched off, leaves AMP links and pages alone', async ({

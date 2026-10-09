@@ -35,6 +35,6 @@ Everything runs inside your browser, except the two lookups described under "Out
     Switch "Show YouTube dislikes" off to stop these requests.
 - **No analytics, tracking, ads, or remote code.**
 
-The source code is public: https://github.com/vladanp/vladan-toolkit
+The source code is public: https://github.com/vladanp/vladan-toolkit-extension
 
-Questions: open an issue at https://github.com/vladanp/vladan-toolkit/issues
+Questions: open an issue at https://github.com/vladanp/vladan-toolkit-extension/issues
