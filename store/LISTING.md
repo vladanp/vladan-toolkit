@@ -19,7 +19,6 @@ YouTube
 
 Reddit
 • Reddit cleaner: hides promoted posts and other ads, awards, and "Trending today" in search, on new and old Reddit.
-• Always use old Reddit (off by default): opens Reddit pages on old.reddit.com.
 
 LinkedIn
 • Hide promoted and suggested posts: hides ads ("Promoted") and "Suggested" posts in your feed.
@@ -66,7 +65,7 @@ Cleans up the websites the user visits: removes distractions (YouTube Shorts, wa
 |---|---|
 | `storage` | `Saves the user's settings (each feature's on/off switch, the chosen video quality) in chrome.storage.sync. Nothing else is stored.` |
 | `scripting` | `The cookie banner feature runs a few small functions bundled with the extension (from DuckDuckGo's open-source autoconsent library) in the page, to reject a consent pop-up through the consent manager's own API when it can't be done by clicking. No remote or user-provided code is run.` |
-| `declarativeNetRequestWithHostAccess` | `Removes tracking parameters (utm_source, fbclid, ...) from web addresses before pages load, sends links to Google's AMP viewer and the AMP cache (google.com/amp/s/..., cdn.ampproject.org) to the page they show, and, only if the user turns it on, opens Reddit pages on old.reddit.com. All use static rules bundled with the extension.` |
+| `declarativeNetRequestWithHostAccess` | `Removes tracking parameters (utm_source, fbclid, ...) from web addresses before pages load, sends links to Google's AMP viewer and the AMP cache (google.com/amp/s/..., cdn.ampproject.org) to the page they show. Both use static rules bundled with the extension.` |
 | Host permission (all websites) | `Cookie banners, newsletter and chat pop-ups, notification and sign-in prompts, fake-urgency messages, AMP pages and link tracking parameters appear on any website, so those features need to run on all sites. Their scripts only hide or mark elements in the page, answer prompts, or open a page's normal version; the extension does not collect or transmit page content. YouTube, Reddit and LinkedIn features run only on youtube.com, reddit.com and linkedin.com.` |
 
 **Remote code:** `No, I am not using remote code.`

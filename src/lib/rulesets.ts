@@ -9,21 +9,18 @@ import { type Feature, featureEnabled } from './features';
 export interface Rule {
   id: number;
   priority?: number;
-  action:
-    | { type: 'allow' | 'block' }
-    | {
-        type: 'redirect';
-        redirect: {
-          transform?: { host?: string; queryTransform?: { removeParams?: string[] } };
-          regexSubstitution?: string;
-        };
-      };
+  action: {
+    type: 'redirect';
+    redirect: {
+      transform?: { queryTransform?: { removeParams?: string[] } };
+      regexSubstitution?: string;
+    };
+  };
   condition: {
     urlFilter?: string;
     regexFilter?: string;
     isUrlFilterCaseSensitive?: boolean;
     requestDomains?: string[];
-    excludedInitiatorDomains?: string[];
     resourceTypes: ('main_frame' | 'sub_frame')[];
   };
 }

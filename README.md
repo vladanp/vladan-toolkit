@@ -13,7 +13,6 @@ Built with [WXT](https://wxt.dev), React 19, TypeScript 7 and Tailwind CSS v4.
 | YouTube | Show YouTube dislikes | Shows the dislike count next to the dislike button. Counts are estimates from [Return YouTube Dislike](https://returnyoutubedislike.com) (the video's id is sent to look them up) | On |
 | YouTube | Default video quality | Plays videos in the quality you pick next to the switch (or the best below it) instead of YouTube's automatic choice; 1080p unless you change it | On |
 | Reddit | Reddit cleaner | Hides promoted posts and other ads, awards, and "Trending today" in search (new and old Reddit) | On |
-| Reddit | Always use old Reddit | Opens Reddit pages on old.reddit.com (Reddit requires being logged in for old Reddit; links clicked on old Reddit still reach new Reddit) | Off |
 | LinkedIn | Hide promoted and suggested posts | Hides ads ("Promoted", "Promoted by …") and "Suggested" posts in the feed | On |
 | Pop-ups | Reject cookie banners | Rejects cookie consent pop-ups, or hides them when there is no way to reject (DuckDuckGo's [autoconsent](https://github.com/duckduckgo/autoconsent), MPL-2.0) | On |
 | Pop-ups | Hide newsletter and sign-up pop-ups | Hides overlays that ask for your email or offer a discount for signing up, with their backdrop, and unlocks scrolling. Forms you open yourself stay | On |

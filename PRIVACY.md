@@ -13,8 +13,7 @@ Everything runs inside your browser, except the two lookups described under "Out
   - **YouTube** (www.youtube.com): stylesheets that hide Shorts and watched videos in Subscriptions; scripts that
     skip sponsor segments in the video you're watching, show its dislike count, and set the video quality you
     picked.
-  - **Reddit** (www.reddit.com, old.reddit.com): a stylesheet that hides ads, awards and trending searches; when
-    you switch it on, Reddit pages are opened on old.reddit.com.
+  - **Reddit** (www.reddit.com, old.reddit.com): a stylesheet that hides ads, awards and trending searches.
   - **LinkedIn** (www.linkedin.com): a script that hides promoted and suggested posts in the feed.
   - **All websites:** cookie consent pop-ups are rejected or hidden (using DuckDuckGo's open-source
     autoconsent rules, bundled in the extension); newsletter/sign-up pop-ups, chat widgets, sites' own

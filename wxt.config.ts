@@ -25,7 +25,7 @@ export default defineConfig({
     // Only what features need (see CLAUDE.md):
     // - storage: per-feature on/off settings
     // - scripting: cookie banners (autoconsent's built-in snippets for some consent pop-ups)
-    // - declarativeNetRequestWithHostAccess: tracking parameters, old Reddit (network rules)
+    // - declarativeNetRequestWithHostAccess: tracking parameters, AMP links (network rules)
     permissions: ['storage', 'scripting', 'declarativeNetRequestWithHostAccess'],
     // Cookie banners, pop-ups, tracking parameters and dark patterns are on every website.
     host_permissions: ['*://*/*'],

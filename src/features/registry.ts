@@ -15,7 +15,6 @@ import { removeTrackingParams } from './remove-tracking-params';
 import { showYoutubeDislikes } from './show-youtube-dislikes';
 import { skipAmpPages } from './skip-amp-pages';
 import { skipYoutubeSponsors } from './skip-youtube-sponsors';
-import { useOldReddit } from './use-old-reddit';
 
 /** Every feature, in the order its switch appears (within its group) in the popup and settings. */
 export const features: readonly Feature[] = [
@@ -25,7 +24,6 @@ export const features: readonly Feature[] = [
   showYoutubeDislikes,
   defaultYoutubeQuality,
   cleanReddit,
-  useOldReddit,
   hideLinkedinPromotedPosts,
   rejectCookieBanners,
   hideNewsletterPopups,

@@ -3,6 +3,5 @@
 // import the rules modules (relative paths, no runtime `@/` or `#imports`).
 import { trackingParamsRuleset } from './remove-tracking-params/rules';
 import { ampRuleset } from './skip-amp-pages/rules';
-import { oldRedditRuleset } from './use-old-reddit/rules';
 
-export const rulesets = [trackingParamsRuleset, oldRedditRuleset, ampRuleset];
+export const rulesets = [trackingParamsRuleset, ampRuleset];
